@@ -1,65 +1,56 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/mt3h_ASS)
+# Assignment 3 (A3)
 
-# Objective for Assignment 2
+Now that we have our basic workout app working (A2) we are going to build out more features. Our starting point is your A2 code, so copy it into this repo (not the `.github` folder). ***The goal is to have a production ready workout app by the end of A3.*** Some of the features below are harder to implement than others. I recommend staring with the "Persisting state" and then doing the rest in any order.
 
-This is the 2nd assignment (A2) for E-39 Design Principles in React. Using our timers from Assignment 1 (A1), we will build a workout app that allows our users to assemble **multiple timers** into a workout queue. This workout queue will be executed in the order that the timers were added. Let's take a look at an example:
+## List of new features 
 
-![Workout example 1](images/example_workout.png)
+### Persisting state (Only Graduate)
 
-## Structural Changes to Context
+Our workout app has a pretty big problem, when the user refreshes the page we lose all configuration. We want to solve this by persisting state, so that if the page is reloaded or closed accidentally, we can restore the user to the same state. I like to think of it as we have two separate chunks of state we want to store. The first is the initial timer configuration and the second is the running state. For the timer configuration state we can store this in the URL. As the user changes the configuration, we want to update the url. We should only do this when the user has added/removed/moved the timer from configuration. We recommend that you don't update URL every time they enter an input, but instead have some sort of save button that would sync URL. Once the user has configured the workout and started the workout, we want to store the running state in local storage. We don't want to be doing a million writes to local storage, so I recommend that you think about how we can accomplish this with fewer writes. It doesn't have to restore to the latest millisecond, but it should be somewhat close (5-10 seconds) to what the workout was at after a reload/refresh of the page.
 
-We will start by moving timer state into a global context that will be shared by the app. In A1 we had to store the state of only one timer that we were configuring, now we will have to store all of the timers that the user has configured and the order that the timers will be executed when the user runs the workout. The order that the timers are created is the order in which they are executed.
+### Edit a timer
 
-The choice of data structure should be a queue, which follows First-In-First-Out, and supports the normal enqueue (add item to the queue) and dequeue (removes item from the queue). How you implement the queue is up to you, but things to consider are that:
+After the workout has been configured and the user is on the main run workout screen, add functionality that allows the user to edit any of the timer configurations (remember to update URL).
 
-1. Each timer can be in one of three states: running, completed, and not running. You will need a way to keep track of what state the timer is in, so that you can display it accordingly (see the image above)
-2. During configuration, the user can remove any timer from the queue, so you will be supporting deleting
-3. While the timer is running, you will need to either store or dynamically calculate which timer is active.
-4. You don't want to clear the configurations as the timers are running. The user should be able to restart the entire workout at anytime
+### Change the order of a timer in configured workout
 
-## Changes to Routing
+After the workout has been configured and the user is on the main run workout screen, the user can move any timer to a different position in the queue. This can be done a couple of ways. You are welcome to use a drag and drop third party package or come up with something on your own (remember to update URL). The user should also be able to remove a timer from the queue.
 
-Currently we have two routes `/` and `/docs`. We are going to be modifying our `/` screen and add a new one called `/add` using `react-router`.
+### Display total time 
 
-### Home - Path should be `/`
+After the workout has been configured and the user is on the main run workout screen, display the total workout time and count down from total time to zero (when workout is complete) once the workout has been started.
 
-- List of timers to be run for a workout. User should be able to remove a timer
-- The total time the workout will take
-- A button to "Add" a new timer. This button brings the user to the `/add` screen
-- Controls to Pause/Resume the workout
-- Controls to reset the workout back to its initial state
-- Controls to "fast-forward" - ends the current running timer and moves onto the next one
+### Add description to each timer
 
-### Add Timer - Path should be `/add`
+Add a description field to each time that the user can add when creating the timer and when editing the timer. It should be displayed while the timer is running.
 
-- When user clicks "Add" from **Home** screen, they are routed to this page, where they can choose the type of timer and configure all inputs for each timer. After configuring, the user confirms and the timer is added to the list.
-- The `/add` page should allow the user to configure any of the four timers (stopwatch, countdown, XY, and tabata)
-- The user should be able to go back to the home page from here
+### Wrap app using react-error-boundary
 
-## Installing and Running the project
+If for any reason your workout app errors out, then you should handle this and present the user with an error message. `react-error-boundary` package has a nice implementation of react "error boundaries" that you can use to handle this scenario.
 
-As you have noticed this repository is empty. To begin this assignment you must copy over all of our files from A1 into this repo. **Do not copy over the `.git` directory and the `.gitignore` file.**.
+### BONUS: Workout history 
 
-## Deliverable
+We want to create a new screen that displays a list of previous workouts (create a new route and link to the history page in the navbar). ***Once a workout has been completed, add this workout to the history and save it to local storage***. On the new history screen display all workouts completed and for each workout you should display some summary of all timers run and what the durations/rounds for each timer was.
 
-- A user can configure (combination of any timers in any order) and execute a workout
-- All four timers must be functional: stopwatch, countdown, tabata, and XY.
-- Routing must be configured to support the home route (`/`) and add route (`/add`)
 
+## Deliverables
+- Complete all features listed above
+- As always deploy your app 
 ## Grading Rubric
-
-- A workout can be configured with any combination of timers. Individual timers can be configured by the user.
-- Final workout application should be bug free
-- DRY (do not repeat yourself). Try to make sure common code is shared and not copy/pasted
-- Console is free of warnings/errors
-- Deploy your application
+We will be grading based on the features listed above and overall code quality
+- Persisting state (20pt)
+- Workout history (20pt)
+- Edit a timer (10pt)
+- Change the order of a timer in configured workout (10pt)
+- Display total time (10pt)
+- Add description to each timer (5pt)
+- Wrap app using react-error-boundary (5pt)
+- DRY and overall code quality (20pt)
 
 ### Deployment Instructions (GH actions)
 
-URL: https://assignment-2-chao-mu.vercel.app/
+[Deployment instructions](https://github.com/prof-tejera/react-deployment-code#github-actions)
 
 ## Bonus
 
-- Add each timer to documentation (3pt)
-
-Sorry, I took over the documentation page.
+- Declare proptypes on all components you have created (5pt)
