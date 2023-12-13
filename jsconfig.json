@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "noImplicitAny": false,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,20 @@
+.component-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xl);
+  justify-content: space-evenly;
+}
+
+.component-list > section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  border: 1px solid black;
+  padding: var(--spacing-md);
+}
+
+.component-list h2 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  align-self: center;
+}

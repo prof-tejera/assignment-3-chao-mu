@@ -1,0 +1,78 @@
+/* CSS Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: inherit;
+}
+
+:root {
+  /* Fluid font sizes calculated with https://www.fluid-type-scale.com/ */
+  --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+  --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --font-size-md: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+  --font-size-lg: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+  --font-size-xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
+  --font-size-xxl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
+  --font-size-xxxl: clamp(3.05rem, 3.54vw + 2.17rem, 5rem);
+
+  --font-weight-bold: 700;
+
+  --clr-error: hsl(0, 100%, 45%);
+  --clr-bg: inherit;
+  --clr-odd-rows: hsla(0, 0%, 0%, 0.04);
+
+  --clr-neutral-300: hsl(0, 0%, 60%);
+
+  --clr-primary-50: hsl(257, 49%, 95%);
+  --clr-primary-100: hsl(257, 49%, 85%);
+  --clr-primary-200: hsl(257, 49%, 75%);
+  --clr-primary-300: hsl(257, 49%, 65%);
+  --clr-primary-400: hsl(257, 49%, 55%);
+  --clr-primary-500: hsl(257, 49%, 45%);
+  --clr-primary-600: hsl(257, 49%, 35%);
+
+  --clr-accent: hsl(218, 51%, 37%);
+  --clr-accent-300: hsl(218, 61%, 37%);
+
+  --clr-highlight: var(--clr-primary-50);
+
+  --clr-link-unvisited: var(--clr-accent-300);
+  --clr-link-visted: var(--clr-accent-300);
+
+  --spacing-xxs: 0.125rem;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 2rem;
+
+  --border-radius-none: 0;
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+}
+
+a:link {
+  color: var(--clr-link-unvisited);
+}
+
+a:visited {
+  color: var(--clr-link-visted);
+}
+
+body {
+  font-size: var(--font-size-md);
+  background: var(--clr-bg);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

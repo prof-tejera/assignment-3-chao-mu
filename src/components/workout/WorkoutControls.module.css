@@ -1,0 +1,23 @@
+.workout-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.workout-controls > * {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.workout-controls__basic {
+  column-gap: var(--spacing-md);
+}
+
+.workout-controls__resets {
+  column-gap: var(--spacing-lg);
+}
+
+.workout-controls__button--empty {
+  visibility: hidden;
+}

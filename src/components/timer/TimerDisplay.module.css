@@ -1,0 +1,51 @@
+.header {
+  background-color: var(--clr-primary-50);
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+}
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.time {
+  font-size: var(--font-size-xxl);
+}
+
+.rounds {
+  font-size: var(--font-size-lg);
+  font-variant: small-caps;
+}
+
+.type {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  font-variant: small-caps;
+  padding: 0.25em 0.5em;
+}
+
+.status {
+  font-size: var(--font-size-xl);
+  font-variant: small-caps;
+}
+
+.progress {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: var(--spacing-xs);
+  place-items: center;
+}
+
+.subgroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--spacing-xs);
+}

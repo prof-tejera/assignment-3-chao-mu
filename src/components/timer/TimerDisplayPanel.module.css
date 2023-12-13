@@ -1,0 +1,15 @@
+.timer-display-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: var(--spacing-lg);
+  border: 3px solid var(--clr-primary-500);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  min-height: 23rem;
+}
+
+.timer-display-panel[data-placeholder="true"] {
+  border-style: dashed;
+  justify-content: center;
+}

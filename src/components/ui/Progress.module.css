@@ -1,0 +1,29 @@
+.progress {
+  --fg-color: var(--clr-primary-500);
+  --bg-color: var(--clr-primary-100);
+  --border-color: var(--clr-primary-500);
+  --border-radius: var(--border-radius-md);
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--bg-color);
+
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.progress::-webkit-progress-bar {
+  background: var(--bg-color);
+}
+
+.progress::-webkit-progress-value {
+  background: var(--fg-color);
+}
+
+.progress::-moz-progress-bar {
+  background: var(--fg-color);
+}

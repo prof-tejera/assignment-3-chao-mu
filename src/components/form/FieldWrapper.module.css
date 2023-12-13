@@ -1,0 +1,24 @@
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs);
+}
+
+.field-wrapper input,
+.field-wrapper select {
+  border: 2px solid hsl(218, 51%, 37%);
+  background-color: white;
+  padding: var(--spacing-sm);
+  transition: border-color 0.5s ease;
+}
+
+.field-wrapper[data-has-error="true"] input,
+.field-wrapper[data-has-error="true"] select {
+  border-color: var(--clr-error);
+}
+
+.field-wrapper label[role="alert"] {
+  color: var(--clr-error);
+}

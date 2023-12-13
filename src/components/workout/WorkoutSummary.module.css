@@ -1,0 +1,19 @@
+.workout-summary {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 3px solid var(--clr-primary-500);
+}
+
+.workout-summary > :first-child {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: var(--spacing-xl);
+}
+
+.workout-summary > :last-child {
+  align-self: end;
+  justify-self: end;
+  font-size: var(--font-size-base);
+}

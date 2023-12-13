@@ -1,0 +1,32 @@
+.workout-plan table {
+  border-collapse: collapse;
+  border: 2px solid black;
+  overflow-x: auto;
+}
+.workout-plan table thead {
+  text-align: left;
+  border-bottom: 2px solid black;
+  font-weight: var(--font-weight-bold);
+}
+
+.workout-plan table th,
+.workout-plan table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.workout-plan tr[data-active="true"] > td:first-child {
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-accent-300);
+}
+
+.workout-plan table tbody tr:nth-child(even) {
+  background-color: var(--clr-odd-rows);
+}
+
+.no-timers {
+  text-align: center;
+}
+
+.actions {
+  font-size: var(--font-size-base);
+}
