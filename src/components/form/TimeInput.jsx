@@ -8,15 +8,24 @@ import styles from "./TimeInput.module.css";
 
 import { useController } from "react-hook-form";
 
-import { joinTimeMs } from "@/utils/time";
+import { joinTimeMs, splitTimeMs } from "@/utils/time";
 
-const TimeInput = ({ label, name }) => {
+const minutesPresets = [0, 1, 2, 3, 5, 10, 15, 20, 25, 30, 45, 50, 60];
+
+const secondsPresets = [0, 5, 15, 30, 45];
+
+const findNearest = (value, presets) =>
+  presets.reduce((prev, curr) => {
+    Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev;
+  }, presets[0]);
+
+const TimeInput = ({ label, name, defaultValue = 0 }) => {
   const {
     field: { onChange, onBlur },
     formState: { errors },
   } = useController({
     name,
-    defaultValue: 0,
+    defaultValue,
     rules: {
       validate: (value) => {
         if (value < 1) {
@@ -25,6 +34,13 @@ const TimeInput = ({ label, name }) => {
       },
     },
   });
+
+  const defaultTime = splitTimeMs(defaultValue);
+  const defaultMinutes = findNearest(
+    defaultTime.minutes + defaultTime.hours * 60,
+    minutesPresets,
+  );
+  const defaultSeconds = findNearest(defaultTime.seconds, secondsPresets);
 
   const minutesRef = useRef();
   const secondsRef = useRef();
@@ -41,28 +57,14 @@ const TimeInput = ({ label, name }) => {
     <FieldWrapper label={label} name={name} error={errors[name]}>
       <div id={name} className={styles["time-input"]}>
         <select onChange={handleChange} onBlur={onBlur} ref={minutesRef}>
-          {[
-            "00",
-            "01",
-            "02",
-            "03",
-            "05",
-            "10",
-            "15",
-            "20",
-            "25",
-            "30",
-            "45",
-            "50",
-            "60",
-          ].map((num) => (
+          {minutesPresets.map((num) => (
             <option key={num} value={num}>
-              {num} minutes
+              {num.toString().padStart(2, "0")} minutes
             </option>
           ))}
         </select>
         <select onChange={handleChange} onBlur={onBlur} ref={secondsRef}>
-          {["00", "05", "15", "30", "45"].map((num) => (
+          {secondsPresets.map((num) => (
             <option key={num} value={num}>
               {num} seconds
             </option>

@@ -1,3 +1,6 @@
+// react-router-dom
+import { useNavigate } from "react-router-dom";
+
 // Ours - Types
 import { hasTimerFeature } from "@/types/timer";
 
@@ -23,6 +26,8 @@ const WorkoutPlan = ({
   selectedTimerId,
   onRemove,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <section className={styles["workout-plan"]}>
       <table>
@@ -62,6 +67,9 @@ const WorkoutPlan = ({
                   visible={options.id !== selectedTimerId || !isWorkoutActive}
                 >
                   <Button onClick={() => onRemove(options.id)}>Delete</Button>
+                  <Button onClick={() => navigate("/edit/" + options.id)}>
+                    Edit
+                  </Button>
                 </Hide>
               </td>
             </tr>

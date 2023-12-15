@@ -10,7 +10,8 @@ import {
 import styles from "./WorkoutControls.module.css";
 
 // Ours - Context
-import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
+import useTimerContext from "@/contexts/timer/useTimerContext";
+import usePlanContext from "@/contexts/plan/usePlanContext";
 
 // Ours - Types
 import { TimerState } from "@/types/timer";
@@ -20,15 +21,10 @@ import Button from "@/components/form/Button";
 import Hide from "@/components/ui/Hide";
 
 const WorkoutControls = () => {
-  const {
-    timerSnapshot,
-    pauseWorkout,
-    resumeWorkout,
-    resetWorkout,
-    resetTimer,
-    fastForwardTimer,
-    fastBackwardTimer,
-  } = useWorkoutContext();
+  const { timerSnapshot, pauseTimer, playTimer, resetTimer, fastForwardTimer } =
+    useTimerContext();
+
+  const { resetWorkout, prevTimer } = usePlanContext();
 
   const state = timerSnapshot.progress.state;
 
@@ -36,18 +32,18 @@ const WorkoutControls = () => {
     <div className={styles["workout-controls"]}>
       <div className={styles["workout-controls__basic"]}>
         <Button
-          onClick={() => fastBackwardTimer()}
+          onClick={() => prevTimer()}
           tooltip="Go to the previous timer, or reset if first timer."
         >
           <IoMdSkipBackward />
         </Button>
         {state === TimerState.STOPPED && (
-          <Button onClick={() => resumeWorkout()} tooltip="Resume the workout">
+          <Button onClick={() => playTimer()} tooltip="Resume the workout">
             <IoMdPlay />
           </Button>
         )}
         {state === TimerState.RUNNING && (
-          <Button onClick={() => pauseWorkout()} tooltip="Pause the workout">
+          <Button onClick={() => pauseTimer()} tooltip="Pause the workout">
             <IoMdPause />
           </Button>
         )}

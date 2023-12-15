@@ -6,14 +6,15 @@ import TimerDisplay from "@/components/timer/TimerDisplay";
 import WorkoutControls from "@/components/workout/WorkoutControls";
 
 // Ours - Context
-import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
+import usePlanContext from "@/contexts/plan/usePlanContext";
+import useTimerContext from "@/contexts/timer/useTimerContext";
 
 // Ours - Style
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
-  const { plan, timerSnapshot, removeTimer, isWorkoutActive } =
-    useWorkoutContext();
+  const { plan, removeTimer } = usePlanContext();
+  const { timerSnapshot, isWorkoutActive } = useTimerContext();
 
   const notReady = timerSnapshot === null;
 

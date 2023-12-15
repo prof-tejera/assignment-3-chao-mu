@@ -16,13 +16,18 @@ import styles from "./TimerForm.module.css";
 /**
  * @param {Object} props
  * @param {function(import('@/types/timer').TimerOptions): void} props.onSubmit
+ * @param {import('@/types/timer').TimerOptions} [props.values]
  */
-const TimerForm = ({ onSubmit }) => {
-  const formMethods = useForm({
-    defaultValues: {
-      type: "Stopwatch",
-    },
-  });
+const TimerForm = ({ values, onSubmit }) => {
+  let defaultValues = {
+    type: "Stopwatch",
+  };
+
+  if (values) {
+    defaultValues = { ...defaultValues, ...values };
+  }
+
+  const formMethods = useForm({ defaultValues });
 
   const { handleSubmit, watch } = formMethods;
 
@@ -41,7 +46,7 @@ const TimerForm = ({ onSubmit }) => {
       ...userProvidedData,
       ...constants,
       type: data.type,
-      id: uuidv4(),
+      id: data.id || uuidv4(),
     };
 
     onSubmit(timerOptions);

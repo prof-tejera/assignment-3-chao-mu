@@ -20,6 +20,7 @@ const WorkoutPlanActionType = {
   REMOVE_TIMER: "removeTimer",
   NEXT_TIMER: "nextTimer",
   PREV_TIMER: "prevTimer",
+  UPDATE_TIMER: "updateTimer",
   GOTO_FIRST_TIMER: "gotoFirstTimer",
 };
 
@@ -40,6 +41,18 @@ const initialState = {
  */
 export const addTimer = ({ options }) => ({
   type: WorkoutPlanActionType.ADD_TIMER,
+  payload: { options },
+});
+
+/**
+ * Creates an action that updates a timer int the plan, given a TimerOptions object
+ *
+ * @param {Object} params
+ * @param {import("@/types/timer").TimerOptions} params.options
+ * @returns {{type: WorkoutPlanActionType, payload: {options: import("@/types/timer").TimerOptions}}}
+ */
+export const updateTimer = ({ options }) => ({
+  type: WorkoutPlanActionType.UPDATE_TIMER,
   payload: { options },
 });
 
@@ -128,6 +141,22 @@ const workoutPlanReducer = (state, action) => {
         ...state,
         cursor: 0,
       };
+    }
+    case WorkoutPlanActionType.UPDATE_TIMER: {
+      const { options } = action.payload;
+      const index = state.plan.findIndex((timer) => timer.id === options.id);
+
+      if (index === -1) {
+        throw Error(`Timer with id "${options.id}" is not found`);
+      }
+
+      const plan = [
+        ...state.plan.slice(0, index),
+        options,
+        ...state.plan.slice(index + 1),
+      ];
+
+      return { ...state, plan };
     }
     default: {
       throw Error("Unknown action received by clockReducer: " + action.type);

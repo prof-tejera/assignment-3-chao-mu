@@ -4,21 +4,37 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SiteLayout from "@/views/SiteLayout";
 import HomePage from "@/views/HomePage";
 import AddPage from "@/views/AddPage";
+import EditPage from "@/views/EditPage";
+import ErrorPage from "@/views/ErrorPage";
 import DocumentationPage from "@/views/DocumentationPage";
-import WorkoutProvider from "@/contexts/workout/WorkoutProvider";
+import PlanProvider from "@/contexts/plan/PlanProvider";
+import TimerProvider from "@/contexts/timer/TimerProvider";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SiteLayout />,
+    element: (
+      <PlanProvider>
+        <SiteLayout />
+      </PlanProvider>
+    ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <TimerProvider>
+            <HomePage />
+          </TimerProvider>
+        ),
       },
       {
         path: "add",
         element: <AddPage />,
+      },
+      {
+        path: "edit/:timerId",
+        element: <EditPage />,
       },
       {
         path: "docs",
@@ -28,10 +44,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App = () => (
-  <WorkoutProvider>
-    <RouterProvider router={router} />;
-  </WorkoutProvider>
-);
+const App = () => <RouterProvider router={router} />;
 
 export default App;
