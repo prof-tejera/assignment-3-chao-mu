@@ -5,18 +5,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import throwNotFound from "@/utils/throwNotFound";
 
 // Ours - Contexts
-import usePlanContext from "@/contexts/plan/usePlanContext";
+import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
 
 // Ours - Components
 import TimerForm from "@/components/timer/TimerForm";
 
+// Ours - Styles
 import styles from "./EditPage.module.css";
 
 const EditPage = () => {
   const navigate = useNavigate();
   const { timerId } = useParams();
 
-  const { updateTimer, plan } = usePlanContext();
+  const { updateTimer, plan } = useWorkoutContext();
 
   const timerOptions = plan.find((timer) => timer.id === timerId);
   if (timerOptions === undefined) {
