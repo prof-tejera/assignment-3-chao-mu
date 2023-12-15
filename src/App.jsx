@@ -1,32 +1,29 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Ours
+// Ours - Pages
 import SiteLayout from "@/views/SiteLayout";
 import HomePage from "@/views/HomePage";
 import AddPage from "@/views/AddPage";
 import EditPage from "@/views/EditPage";
 import ErrorPage from "@/views/ErrorPage";
 import DocumentationPage from "@/views/DocumentationPage";
-import PlanProvider from "@/contexts/plan/PlanProvider";
+
+// Ours - Contexts
 import WorkoutProvider from "@/contexts/workout/WorkoutProvider";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PlanProvider>
+      <WorkoutProvider>
         <SiteLayout />
-      </PlanProvider>
+      </WorkoutProvider>
     ),
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: (
-          <WorkoutProvider>
-            <HomePage />
-          </WorkoutProvider>
-        ),
+        element: <HomePage />,
       },
       {
         path: "add",

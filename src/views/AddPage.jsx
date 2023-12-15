@@ -1,6 +1,6 @@
 import TimerForm from "@/components/timer/TimerForm";
 
-import usePlanContext from "@/contexts/plan/usePlanContext";
+import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
 
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import styles from "./AddPage.module.css";
 const AddPage = () => {
   const navigate = useNavigate();
 
-  const { addTimer } = usePlanContext();
+  const { addTimer } = useWorkoutContext();
 
   // Add the timer and redirect to home
   const handleSubmit = (timer) => {
