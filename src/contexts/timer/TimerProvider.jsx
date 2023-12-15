@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Ours - Contexts
 import TimerContext from "./TimerContext";
@@ -27,11 +27,25 @@ import useSyncClock from "@/hooks/useSyncClock";
 
 const TimerProvider = ({ children }) => {
   const [timerSnapshot, setTimerSnapshot] = useState(null);
+  const [lastTimerId, setLastTimerId] = useState(null);
 
   const { currentTimerOptions, plan, signalCompleted } = usePlanContext();
 
   const [clockState, clockDispatch] = useClockReducer();
   const { transpired, paused } = clockState;
+
+  useEffect(() => {
+    if (currentTimerOptions === null) {
+      return;
+    }
+
+    if (lastTimerId !== currentTimerOptions.id) {
+      // Do not change pause state.
+      clockDispatch(paused ? resetClock() : restartClock());
+
+      setLastTimerId(currentTimerOptions.id);
+    }
+  }, [currentTimerOptions, clockDispatch, lastTimerId, paused]);
 
   useSyncClock(
     () => {

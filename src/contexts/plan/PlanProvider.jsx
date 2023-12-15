@@ -16,6 +16,10 @@ const PlanProvider = ({ children }) => {
   const [{ currentTimerOptions, isLastTimer, plan }, workoutPlanDispatch] =
     useWorkoutPlanReducer();
 
+  const dispatchNextTimer = () => {
+    workoutPlanDispatch(nextTimer());
+  };
+
   const provided = {
     plan,
     isLastTimer,
@@ -27,7 +31,7 @@ const PlanProvider = ({ children }) => {
       workoutPlanDispatch(prevTimer());
     },
     nextTimer: () => {
-      workoutPlanDispatch(nextTimer());
+      dispatchNextTimer();
     },
     resetWorkout: () => {
       workoutPlanDispatch(gotoFirstTimer());
@@ -37,6 +41,9 @@ const PlanProvider = ({ children }) => {
     },
     addTimer: (options) => {
       workoutPlanDispatch(addTimer({ options }));
+    },
+    signalCompleted: () => {
+      dispatchNextTimer();
     },
   };
 

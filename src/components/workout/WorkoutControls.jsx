@@ -10,7 +10,7 @@ import {
 import styles from "./WorkoutControls.module.css";
 
 // Ours - Context
-import useTimerContext from "@/contexts/timer/useTimerContext";
+import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
 import usePlanContext from "@/contexts/plan/usePlanContext";
 
 // Ours - Types
@@ -22,7 +22,7 @@ import Hide from "@/components/ui/Hide";
 
 const WorkoutControls = () => {
   const { timerSnapshot, pauseTimer, playTimer, resetTimer, fastForwardTimer } =
-    useTimerContext();
+    useWorkoutContext();
 
   const { resetWorkout, prevTimer } = usePlanContext();
 

@@ -8,7 +8,7 @@ import EditPage from "@/views/EditPage";
 import ErrorPage from "@/views/ErrorPage";
 import DocumentationPage from "@/views/DocumentationPage";
 import PlanProvider from "@/contexts/plan/PlanProvider";
-import TimerProvider from "@/contexts/timer/TimerProvider";
+import WorkoutProvider from "@/contexts/workout/WorkoutProvider";
 
 const router = createBrowserRouter([
   {
@@ -23,9 +23,9 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <TimerProvider>
+          <WorkoutProvider>
             <HomePage />
-          </TimerProvider>
+          </WorkoutProvider>
         ),
       },
       {
