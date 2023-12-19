@@ -2,20 +2,33 @@
 import WorkoutPlan from "@/components/workout/WorkoutPlan";
 import WorkoutSummary from "@/components/workout/WorkoutSummary";
 import TimerDisplayPlaceholder from "@/components/timer/TimerDisplayPlaceholder";
-import TimerDisplay from "@/components/timer/TimerDisplay";
+import TimerContainer from "@/components/timer/TimerContainer";
 import WorkoutControls from "@/components/workout/WorkoutControls";
 
 // Ours - Context
-import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
+import {
+  useWorkoutContext,
+  useWorkoutDispatchContext,
+} from "@/contexts/WorkoutContext";
+
+// Ours - Reducers
+import { WorkoutActionType } from "@/reducers/workoutReducer";
 
 // Ours - Style
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
-  const { plan, timerSnapshot, removeTimer, isWorkoutActive } =
-    useWorkoutContext();
+  const { plan, currentTimerOptions } = useWorkoutContext();
+  const workoutDispatch = useWorkoutDispatchContext();
 
-  const notReady = timerSnapshot === null;
+  const notReady = plan.length === 0;
+
+  const removeTimer = (timer) => {
+    workoutDispatch({
+      type: WorkoutActionType.REMOVE_TIMER,
+      payload: { id: timer.id },
+    });
+  };
 
   return (
     <div className={styles["home-page"]}>
@@ -31,16 +44,15 @@ const HomePage = () => {
             <div className={styles.overview}>
               <WorkoutSummary plan={plan} />
             </div>
-            <TimerDisplay timerSnapshot={timerSnapshot} />
+            <TimerContainer />
             <div className={styles["control-column"]}>
               <WorkoutControls />
             </div>
           </div>
           <WorkoutPlan
             plan={plan}
-            selectedTimerId={timerSnapshot && timerSnapshot.id}
+            selectedTimerId={currentTimerOptions && currentTimerOptions.id}
             onRemove={(timer) => removeTimer(timer)}
-            isWorkoutActive={isWorkoutActive}
           />
         </>
       )}

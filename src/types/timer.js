@@ -1,9 +1,4 @@
-/**
- * @typedef {Object} TimerSnapshot
- * @property {string} id - Unique identifier of the timer.
- * @property {TimerOptions} options - Options of the timer.
- * @property {TimerProgress} progress - Progress of the timer.
- */
+import { getElapsed } from "@/types/clock";
 
 /**
  * @typedef {Object} TimerOptions
@@ -24,8 +19,8 @@
  * @property {number} roundProgress - Progress of current round.
  * @property {number} totalProgress - Progress of all rounds.
  * @property {boolean} isWorking - Indicates if the timer is in work period.
- * @property {number} roundTranspired - Time remaining in current round.
- * @property {TimerState} state - State of the timer.
+ * @property {number} roundElapsed - Time remaining in current round.
+ * @property {TimerStatus} status - Status of the timer.
  */
 
 /**
@@ -35,10 +30,16 @@
  */
 
 /**
- * The running state of a timer.
+ * @typedef {Object} TimerSnapshot
+ * @property {TimerOptions} options - Options of the timer.
+ * @property {TimerProgress} progress - Progress of the timer.
+ */
+
+/**
+ * The running status of a timer.
  * @enum {string}
  */
-export const TimerState = {
+export const TimerStatus = {
   /** Timer is paused. */
   STOPPED: "stopped",
   /** Timer is running. */
@@ -49,6 +50,7 @@ export const TimerState = {
 
 /**
  * Logically, all timers are different configurations of a TABATA
+ *
  * timer, but users may see it differently.
  * @type {Object.<string, TimerOptionsPreset>}
  */
@@ -84,6 +86,11 @@ export const TimerOptionsPresets = {
   },
 };
 
+export const createTimerSnapshot = ({ options, clock }) => ({
+  options,
+  progress: getTimerProgress({ options, clock }),
+});
+
 export const hasTimerFeature = (type, feature) => {
   const preset = TimerOptionsPresets[type];
 
@@ -93,38 +100,22 @@ export const hasTimerFeature = (type, feature) => {
 };
 
 /**
- * Returns a TimerSnapshot constructed of the given options.
- * @param {Object} params
- * @param {TimerOptions} params.options - Options of the timer.
- * @param {boolean} [params.active] - Indicates if the timer is active.
- * @param {number} [params.transpired] - Time transpired in miliseconds.
- * @returns {TimerSnapshot} Timer object.
- */
-export const createTimerSnapshot = ({
-  options,
-  active = false,
-  transpired = 0,
-}) => ({
-  id: options.id,
-  options,
-  progress: getTimerProgress({ options, active, transpired }),
-});
-
-/**
- * Returns the progress of the timer given transpired time.
+ * Returns the progress of the timer given a clock
  *
  * @param {Object} params
  * @param {TimerOptions} params.options - Options of the timer.
- * @param {number} params.transpired - Time transpired in miliseconds.
- * @param {boolean} params.active - Indicates if the timer is active.
+ * @param {import("@/types/clock").Clock} params.clock - Clock keeping timer's time
  *
  * @returns {TimerProgress} Progress of the timer.
  */
-export const getTimerProgress = ({ options, transpired, active }) => {
+export const getTimerProgress = ({ options, clock }) => {
+  const { paused } = clock;
+  const elapsed = getElapsed(clock);
+
   const { workDuration, restDuration, rounds, id } = options;
   const msPerRound = workDuration + restDuration;
 
-  const completedRoundsExact = transpired / msPerRound;
+  const completedRoundsExact = elapsed / msPerRound;
   const completedRounds = Math.floor(completedRoundsExact);
 
   const isCompleted = completedRounds >= rounds;
@@ -139,8 +130,8 @@ export const getTimerProgress = ({ options, transpired, active }) => {
       roundProgress: 1,
       totalProgress: 1,
       isWorking: false,
-      roundTranspired: roundDuration,
-      state: TimerState.COMPLETED,
+      roundElapsed: roundDuration,
+      status: TimerStatus.COMPLETED,
       round: rounds,
     };
   }
@@ -148,15 +139,15 @@ export const getTimerProgress = ({ options, transpired, active }) => {
   const roundRemainder = (completedRoundsExact - completedRounds) * msPerRound;
   const isWorking = roundRemainder < workDuration;
 
-  const roundTranspired = isWorking
+  const roundElapsed = isWorking
     ? Math.min(roundRemainder, workDuration)
     : Math.max(0, roundRemainder - workDuration);
 
   const roundProgress =
-    roundTranspired / (isWorking ? workDuration : restDuration);
+    roundElapsed / (isWorking ? workDuration : restDuration);
   const totalProgress = (completedRounds + roundProgress) / rounds;
 
-  let state = active ? TimerState.RUNNING : TimerState.STOPPED;
+  let status = paused ? TimerStatus.RUNNING : TimerStatus.STOPPED;
 
   return {
     id,
@@ -164,8 +155,8 @@ export const getTimerProgress = ({ options, transpired, active }) => {
     roundProgress,
     totalProgress,
     isWorking,
-    roundTranspired,
-    state,
+    roundElapsed,
+    status,
     round: Math.min(completedRounds + 1, rounds),
     roundDuration: isWorking ? workDuration : restDuration,
   };

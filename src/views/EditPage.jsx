@@ -5,7 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import throwNotFound from "@/utils/throwNotFound";
 
 // Ours - Contexts
-import useWorkoutContext from "@/contexts/workout/useWorkoutContext";
+import { useWorkoutContext } from "@/contexts/WorkoutContext";
+import { useWorkoutDispatchContext } from "@/contexts/WorkoutContext";
 
 // Ours - Components
 import TimerForm from "@/components/timer/TimerForm";
@@ -13,11 +14,15 @@ import TimerForm from "@/components/timer/TimerForm";
 // Ours - Styles
 import styles from "./EditPage.module.css";
 
+// Ours - Reducers
+import { WorkoutActionType } from "@/reducers/workoutReducer";
+
 const EditPage = () => {
   const navigate = useNavigate();
   const { timerId } = useParams();
 
-  const { updateTimer, plan } = useWorkoutContext();
+  const { plan } = useWorkoutContext();
+  const workoutDispatch = useWorkoutDispatchContext();
 
   const timerOptions = plan.find((timer) => timer.id === timerId);
   if (timerOptions === undefined) {
@@ -26,7 +31,10 @@ const EditPage = () => {
 
   // Update the timer and redirect to home
   const handleSubmit = (options) => {
-    updateTimer(options);
+    workoutDispatch({
+      type: WorkoutActionType.UPDATE_TIMER,
+      payload: { options },
+    });
     navigate("/");
   };
 

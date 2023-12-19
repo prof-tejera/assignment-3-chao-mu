@@ -16,16 +16,10 @@ import styles from "./WorkoutPlan.module.css";
  * @param {Object} props
  * @param {Array.<import('@/types/timer').TimerOptions>} props.plan
  * @param {string} [props.selectedTimerId]
- * @param {boolean} [props.isWorkoutActive]
  * @param {function(string): void} props.onRemove
  * @returns {JSX.Element}
  */
-const WorkoutPlan = ({
-  plan,
-  isWorkoutActive = false,
-  selectedTimerId,
-  onRemove,
-}) => {
+const WorkoutPlan = ({ plan, selectedTimerId, onRemove }) => {
   const navigate = useNavigate();
 
   return (
@@ -63,9 +57,7 @@ const WorkoutPlan = ({
                 {hasTimerFeature(options.type, "rounds") && options.rounds}
               </td>
               <td className={styles.actions}>
-                <Hide
-                  visible={options.id !== selectedTimerId || !isWorkoutActive}
-                >
+                <Hide visible={options.id !== selectedTimerId}>
                   <Button onClick={() => onRemove(options.id)}>Delete</Button>
                   <Button onClick={() => navigate("/edit/" + options.id)}>
                     Edit

@@ -4,40 +4,39 @@ import TimeDisplay from "@/components/ui/TimeDisplay";
 import TimerDisplayPanel from "@/components/timer/TimerDisplayPanel";
 
 // Ours - Types
-import { hasTimerFeature, TimerState } from "@/types/timer";
+import { hasTimerFeature, TimerStatus } from "@/types/timer";
 
 // Ours - Style
 import styles from "./TimerDisplay.module.css";
 
-const TimerDisplay = ({ timerSnapshot }) => {
-  const { options, progress } = timerSnapshot;
+const TimerDisplay = ({ timerSnapshot: { options, progress } }) => {
   const { rounds, type, countUp } = options;
   const {
     round,
-    roundTranspired,
+    roundElapsed,
     isWorking,
     roundDuration,
-    state,
+    status,
     roundProgress,
     totalProgress,
   } = progress;
 
   let displayStatus = "";
-  if (state == TimerState.RUNNING) {
+  if (status == TimerStatus.RUNNING) {
     displayStatus = isWorking ? "Work!" : "Rest";
-  } else if (state == TimerState.STOPPED) {
+  } else if (status == TimerStatus.STOPPED) {
     displayStatus = "Paused";
-  } else if (state == TimerState.COMPLETED) {
+  } else if (status == TimerStatus.COMPLETED) {
     displayStatus = "Completed";
   } else {
     throw new Error(
-      `Unable to calculate timer display state. state=${state}, isWorking=${isWorking}`,
+      `Unable to calculate timer display status. status=${status}, isWorking=${isWorking}`,
     );
   }
 
-  const displayedTranspired = countUp
-    ? roundTranspired
-    : roundDuration - roundTranspired;
+  const displayedElapsed = countUp
+    ? roundElapsed
+    : roundDuration - roundElapsed;
 
   const hasRoundFeature = hasTimerFeature(type, "rounds");
 
@@ -48,7 +47,7 @@ const TimerDisplay = ({ timerSnapshot }) => {
       </div>
       <div className={[styles["featured"]].join(" ")}>
         <div className={styles["time"]}>
-          <TimeDisplay timeMs={displayedTranspired} showMs />
+          <TimeDisplay timeMs={displayedElapsed} showMs />
         </div>
         <div className={styles["status"]}>{displayStatus}</div>
       </div>

@@ -8,7 +8,7 @@ import TimerForm from "@/components/timer/TimerForm";
 import TimeDisplay from "@/components/ui/TimeDisplay";
 
 // Ours - Types
-import { TimerState } from "@/types/timer";
+import { TimerStatus } from "@/types/timer";
 
 // Ours - Styles
 import styles from "./DocumentationPage.module.css";
@@ -48,10 +48,10 @@ const docs = [
         options: exampleTABATA,
         progress: {
           round: 1,
-          roundTranspired: 10000,
+          roundElapsed: 10000,
           isWorking: true,
           roundDuration: 20000,
-          state: TimerState.RUNNING,
+          status: TimerStatus.RUNNING,
         },
       },
     },

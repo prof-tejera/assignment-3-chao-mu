@@ -9,14 +9,17 @@ import ErrorPage from "@/views/ErrorPage";
 import DocumentationPage from "@/views/DocumentationPage";
 
 // Ours - Contexts
-import WorkoutProvider from "@/contexts/workout/WorkoutProvider";
+import { WorkoutProvider } from "@/contexts/WorkoutContext";
+import { ClockProvider } from "@/contexts/ClockContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <WorkoutProvider>
-        <SiteLayout />
+        <ClockProvider>
+          <SiteLayout />
+        </ClockProvider>
       </WorkoutProvider>
     ),
     errorElement: <ErrorPage />,
