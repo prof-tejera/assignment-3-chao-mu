@@ -147,7 +147,7 @@ export const getTimerProgress = ({ options, clock }) => {
     roundElapsed / (isWorking ? workDuration : restDuration);
   const totalProgress = (completedRounds + roundProgress) / rounds;
 
-  let status = paused ? TimerStatus.RUNNING : TimerStatus.STOPPED;
+  let status = paused ? TimerStatus.STOPPED : TimerStatus.RUNNING;
 
   return {
     id,
