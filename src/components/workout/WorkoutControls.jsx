@@ -62,12 +62,15 @@ const WorkoutControls = () => {
     clockDispatch({
       type: ClockActionType.RESET,
     });
+    workoutDispatch({
+      type: WorkoutActionType.TIMER_RESET,
+      payload: { id: currentTimerOptions.id },
+    });
   };
 
   const resetWorkout = () => {
     clockDispatch({
-      type: ClockActionType.SET_ELAPSED,
-      payload: { elapsed: 0 },
+      type: ClockActionType.RESET,
     });
 
     workoutDispatch({

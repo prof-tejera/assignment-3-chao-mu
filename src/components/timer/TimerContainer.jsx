@@ -33,10 +33,14 @@ const TimerContainer = () => {
       options: currentTimerOptions,
     });
 
-    if (updatedTimerSnapshot.status == TimerStatus.COMPLETED) {
+    const {
+      progress: { status, id },
+    } = updatedTimerSnapshot;
+
+    if (status == TimerStatus.COMPLETED) {
       workoutDispatch({
         type: WorkoutActionType.TIMER_COMPLETED,
-        payload: { id: updatedTimerSnapshot.options.id },
+        payload: { id },
       });
     }
 

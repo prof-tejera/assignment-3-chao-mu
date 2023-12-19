@@ -14,6 +14,12 @@
  * @property {boolean} completed
  */
 
+export const createWorkoutState = () => ({
+  plan: [],
+  cursor: 0,
+  completed: false,
+});
+
 export const createWorkout = (state) => {
   const { plan, cursor } = state;
   const isLastTimer = cursor >= plan.length - 1;
@@ -68,6 +74,41 @@ export const removeTimer = ({ state, id }) => {
   const updatedPlan = [...plan.slice(0, index), ...plan.slice(index + 1)];
 
   return { ...state, plan: updatedPlan, cursor: updatedCursor };
+};
+
+export const timerReset = ({ state, id }) => {
+  const { plan, cursor } = state;
+
+  // Are there no timers?
+  if (plan.length > 0 && plan[cursor].id === id) {
+    return {
+      ...state,
+      completed: false,
+    };
+  }
+
+  return state;
+};
+
+export const timerCompleted = ({ state, id }) => {
+  const { plan, cursor } = state;
+
+  // Are there no timers?
+  if (plan.length === 0) {
+    return state;
+  }
+
+  // Is the current timer not the completed timer?
+  if (plan[cursor].id !== id) {
+    return state;
+  }
+
+  // Was it the last timer?
+  if (cursor === plan.length - 1) {
+    return { ...state, completed: true };
+  }
+
+  return nextTimer(state);
 };
 
 export const nextTimer = (state) => ({

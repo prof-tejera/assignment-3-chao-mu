@@ -2,7 +2,14 @@
 import { useReducer } from "react";
 
 // Ours - Types
-import { createWorkout, removeTimer, nextTimer } from "@/types/workout";
+import {
+  createWorkout,
+  createWorkoutState,
+  removeTimer,
+  nextTimer,
+  timerCompleted,
+  timerReset,
+} from "@/types/workout";
 
 /**
  * Possible action types for workoutReducer
@@ -17,20 +24,12 @@ export const WorkoutActionType = {
   PREV_TIMER: "prevTimer",
   UPDATE_TIMER: "updateTimer",
   TIMER_COMPLETED: "timerCompleted",
-  GOTO_FIRST_TIMER: "reset",
+  TIMER_RESET: "timerReset",
+  GOTO_FIRST_TIMER: "gotoFirstTimer",
 };
 
 /**
- * Default state for workoutReducer
- */
-const initialState = {
-  plan: [],
-  cursor: 0,
-  completed: false,
-};
-
-/**
- * @param {typeof initialState} state
+ * @param {import("@/types/workout").WorkoutState} state
  * @param {Object} action
  * @param {WorkoutActionType} action.type
  * @param {any} [action.payload]
@@ -38,14 +37,14 @@ const initialState = {
 const workoutReducer = (state, { type, payload }) => {
   switch (type) {
     case WorkoutActionType.TIMER_COMPLETED: {
-      const { plan, cursor } = state;
       const { id } = payload;
 
-      if (plan.length > 0 && plan[cursor].id === id) {
-        return nextTimer(state);
-      }
+      return timerCompleted({ state, id });
+    }
+    case WorkoutActionType.TIMER_RESET: {
+      const { id } = payload;
 
-      return state;
+      return timerReset({ state, id });
     }
     case WorkoutActionType.ADD_TIMER: {
       const { options } = payload;
@@ -65,12 +64,14 @@ const workoutReducer = (state, { type, payload }) => {
       return {
         ...state,
         cursor: Math.max(state.cursor - 1, 0),
+        completed: false,
       };
     }
     case WorkoutActionType.GOTO_FIRST_TIMER: {
       return {
         ...state,
         cursor: 0,
+        completed: false,
       };
     }
     case WorkoutActionType.UPDATE_TIMER: {
@@ -101,7 +102,7 @@ const workoutReducer = (state, { type, payload }) => {
  * @returns {[import("@/types/workout").Workout, function({type: WorkoutActionType, [payload: any]})]}
  */
 export const useWorkoutReducer = () => {
-  const [state, dispatch] = useReducer(workoutReducer, initialState);
+  const [state, dispatch] = useReducer(workoutReducer, createWorkoutState());
 
   return [createWorkout(state), dispatch];
 };
