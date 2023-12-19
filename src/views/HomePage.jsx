@@ -23,10 +23,10 @@ const HomePage = () => {
 
   const notReady = plan.length === 0;
 
-  const removeTimer = (timer) => {
+  const removeTimer = (timerId) => {
     workoutDispatch({
       type: WorkoutActionType.REMOVE_TIMER,
-      payload: { id: timer.id },
+      payload: { id: timerId },
     });
   };
 
@@ -52,7 +52,7 @@ const HomePage = () => {
           <WorkoutPlan
             plan={plan}
             selectedTimerId={currentTimerOptions && currentTimerOptions.id}
-            onRemove={(timer) => removeTimer(timer)}
+            onRemove={(timerId) => removeTimer(timerId)}
           />
         </>
       )}

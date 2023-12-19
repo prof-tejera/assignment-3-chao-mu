@@ -1,6 +1,9 @@
 // React
 import { useReducer } from "react";
 
+// Ours - Types
+import { createWorkout, removeTimer, nextTimer } from "@/types/workout";
+
 /**
  * Possible action types for workoutReducer
  *
@@ -33,11 +36,6 @@ const initialState = {
  * @param {any} [action.payload]
  */
 const workoutReducer = (state, { type, payload }) => {
-  const nextTimer = (state) => ({
-    ...state,
-    cursor: Math.min(state.cursor + 1, state.plan.length - 1),
-  });
-
   switch (type) {
     case WorkoutActionType.TIMER_COMPLETED: {
       const { plan, cursor } = state;
@@ -57,21 +55,8 @@ const workoutReducer = (state, { type, payload }) => {
     }
     case WorkoutActionType.REMOVE_TIMER: {
       const { id } = payload;
-      const index = state.plan.findIndex((timer) => timer.id === id);
 
-      // If the current cursor is on or after the index, this will cause our current timer to jump
-      // forwards, so we need to adjust, unless we want it to jump forward (e.g. we're removingt the current timer)
-      let cursor = state.cursor > index ? state.cursor - 1 : state.cursor;
-
-      const plan = [
-        ...state.plan.slice(0, index),
-        ...state.plan.slice(index + 1),
-      ];
-
-      // This however may have put us out of bounds, so we  might need to adjust
-      cursor = Math.max(0, Math.min(plan.length - 1, cursor));
-
-      return { ...state, plan, cursor };
+      return removeTimer({ state, id });
     }
     case WorkoutActionType.NEXT_TIMER: {
       return nextTimer(state);
@@ -115,22 +100,8 @@ const workoutReducer = (state, { type, payload }) => {
  *
  * @returns {[import("@/types/workout").Workout, function({type: WorkoutActionType, [payload: any]})]}
  */
-
 export const useWorkoutReducer = () => {
   const [state, dispatch] = useReducer(workoutReducer, initialState);
 
-  const { plan, cursor } = state;
-  const isLastTimer = cursor >= plan.length - 1;
-  const isFirstTimer = cursor <= 0;
-
-  const currentTimerOptions = plan[cursor] || null;
-
-  const exposedState = {
-    ...state,
-    currentTimerOptions,
-    isLastTimer,
-    isFirstTimer,
-  };
-
-  return [exposedState, dispatch];
+  return [createWorkout(state), dispatch];
 };
