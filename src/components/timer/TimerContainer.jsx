@@ -31,7 +31,12 @@ const TimerContainer = () => {
 
   const { currentTimerOptions, isLastTimer } = useWorkoutContext();
   const workoutDispatch = useWorkoutDispatchContext();
-  const [timerSnapshot, setTimerSnapshot] = useState(null);
+  const [timerSnapshot, setTimerSnapshot] = useState(() =>
+    createTimerSnapshot({
+      clock,
+      options: currentTimerOptions,
+    }),
+  );
 
   // Pause timer on unmount
   useEffect(() => {
