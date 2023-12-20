@@ -9,6 +9,7 @@ import DocumentationPage from "@/views/DocumentationPage";
 // Ours - Contexts
 import { WorkoutProvider } from "@/contexts/WorkoutContext";
 import { ClockProvider } from "@/contexts/ClockContext";
+import { WorkoutManagementProvider } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Components
 import { FallbackForRouter } from "@/components/system/FallbackPage";
@@ -19,7 +20,9 @@ export default [
     element: (
       <WorkoutProvider>
         <ClockProvider>
-          <SiteLayout />
+          <WorkoutManagementProvider>
+            <SiteLayout />
+          </WorkoutManagementProvider>
         </ClockProvider>
       </WorkoutProvider>
     ),

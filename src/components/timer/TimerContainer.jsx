@@ -5,35 +5,25 @@ import { useState, useEffect } from "react";
 import TimerDisplay from "@/components/timer/TimerDisplay";
 
 // Ours - Context
-import {
-  useClockContext,
-  useClockDispatchContext,
-} from "@/contexts/ClockContext";
-
-import {
-  useWorkoutContext,
-  useWorkoutDispatchContext,
-} from "@/contexts/WorkoutContext";
-
-// Ours - Reducers
-import { WorkoutActionType } from "@/reducers/workoutReducer";
-import { ClockActionType } from "@/reducers/clockReducer";
+import { useClockContext } from "@/contexts/ClockContext";
+import { useWorkoutContext } from "@/contexts/WorkoutContext";
+import { useWorkoutManagementContext } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Hooks
 import useInterval from "@/hooks/useInterval";
 
 // Ours - Types
 import { createTimerSnapshot, TimerStatus } from "@/types/timer";
-import { isLastTimer, getCurrentTimer } from "@/types/workout";
+import { getCurrentTimer } from "@/types/workout";
 
 const TimerContainer = () => {
   const clock = useClockContext();
-  const clockDispatch = useClockDispatchContext();
 
   const workout = useWorkoutContext();
   const currentTimerOptions = getCurrentTimer(workout);
 
-  const workoutDispatch = useWorkoutDispatchContext();
+  const { pauseTimer, signalTimerCompleted } = useWorkoutManagementContext();
+
   const [timerSnapshot, setTimerSnapshot] = useState(() =>
     createTimerSnapshot({
       clock,
@@ -41,12 +31,10 @@ const TimerContainer = () => {
     }),
   );
 
-  // Pause timer on unmount
+  // Pause timer on unmount - bug waiting to happen if pauseTimer changes unexpectedly
   useEffect(() => {
-    return () => {
-      clockDispatch({ type: ClockActionType.PAUSE });
-    };
-  }, [clockDispatch]);
+    return () => pauseTimer();
+  }, [pauseTimer]);
 
   useInterval(() => {
     const updatedTimerSnapshot = createTimerSnapshot({
@@ -59,17 +47,7 @@ const TimerContainer = () => {
     } = updatedTimerSnapshot;
 
     if (status == TimerStatus.COMPLETED) {
-      workoutDispatch({
-        type: WorkoutActionType.TIMER_COMPLETED,
-        payload: { id },
-      });
-
-      if (!isLastTimer) {
-        clockDispatch({
-          type: ClockActionType.SET_ELAPSED,
-          payload: { elapsed: 0 },
-        });
-      }
+      signalTimerCompleted({ id });
     }
 
     setTimerSnapshot(updatedTimerSnapshot);

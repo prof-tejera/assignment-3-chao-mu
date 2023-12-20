@@ -9,13 +9,8 @@ import WorkoutControls from "@/components/workout/WorkoutControls";
 import { getCurrentTimer } from "@/types/workout";
 
 // Ours - Context
-import {
-  useWorkoutContext,
-  useWorkoutDispatchContext,
-} from "@/contexts/WorkoutContext";
-
-// Ours - Reducers
-import { WorkoutActionType } from "@/reducers/workoutReducer";
+import { useWorkoutContext } from "@/contexts/WorkoutContext";
+import { useWorkoutManagementContext } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Style
 import styles from "./HomePage.module.css";
@@ -23,17 +18,12 @@ import styles from "./HomePage.module.css";
 const HomePage = () => {
   const workout = useWorkoutContext();
   const { plan } = workout;
+
+  const { removeTimer } = useWorkoutManagementContext();
+
   const currentTimerOptions = getCurrentTimer(workout);
-  const workoutDispatch = useWorkoutDispatchContext();
 
   const notReady = plan.length === 0;
-
-  const removeTimer = (timerId) => {
-    workoutDispatch({
-      type: WorkoutActionType.REMOVE_TIMER,
-      payload: { id: timerId },
-    });
-  };
 
   return (
     <div className={styles["home-page"]}>
@@ -47,7 +37,7 @@ const HomePage = () => {
           <WorkoutPlan
             plan={plan}
             selectedTimerId={currentTimerOptions && currentTimerOptions.id}
-            onRemove={(timerId) => removeTimer(timerId)}
+            onRemove={(timerId) => removeTimer({ id: timerId })}
           />
         </>
       )}

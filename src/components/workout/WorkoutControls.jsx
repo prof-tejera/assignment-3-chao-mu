@@ -10,106 +10,44 @@ import {
 import styles from "./WorkoutControls.module.css";
 
 // Ours - Context
-import {
-  useWorkoutDispatchContext,
-  useWorkoutContext,
-} from "@/contexts/WorkoutContext";
+import { useWorkoutContext } from "@/contexts/WorkoutContext";
 
-import {
-  useClockContext,
-  useClockDispatchContext,
-} from "@/contexts/ClockContext";
+import { useClockContext } from "@/contexts/ClockContext";
 
-// Ours - Types
-import { getTotalDuration } from "@/types/timer";
-import { isLastTimer, getCurrentTimer } from "@/types/workout";
-
-// Ours - Reducers
-import { WorkoutActionType } from "@/reducers/workoutReducer";
-import { ClockActionType } from "@/reducers/clockReducer";
+import { useWorkoutManagementContext } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Components
 import Button from "@/components/form/Button";
 import Hide from "@/components/ui/Hide";
 
 const WorkoutControls = () => {
-  const workout = useWorkoutContext();
-  const { completed } = workout;
-
+  const { completed } = useWorkoutContext();
   const { paused } = useClockContext();
-  const workoutDispatch = useWorkoutDispatchContext();
-  const clockDispatch = useClockDispatchContext();
 
-  const currentTimerOptions = getCurrentTimer(workout);
-
-  const fastBackwardTimer = () => {
-    clockDispatch({
-      type: ClockActionType.SET_ELAPSED,
-      payload: { elapsed: 0 },
-    });
-    workoutDispatch({ type: WorkoutActionType.PREV_TIMER });
-  };
-
-  const fastForwardTimer = () => {
-    if (isLastTimer(workout)) {
-      clockDispatch({
-        type: ClockActionType.SET_ELAPSED,
-        payload: { elapsed: getTotalDuration(currentTimerOptions) },
-      });
-      clockDispatch({ type: ClockActionType.PAUSE });
-    } else {
-      clockDispatch({
-        type: ClockActionType.SET_ELAPSED,
-        payload: { elapsed: 0 },
-      });
-      workoutDispatch({ type: WorkoutActionType.NEXT_TIMER });
-    }
-  };
-
-  const resetTimer = () => {
-    clockDispatch({
-      type: ClockActionType.RESET,
-    });
-    workoutDispatch({
-      type: WorkoutActionType.TIMER_RESET,
-      payload: { id: currentTimerOptions.id },
-    });
-  };
-
-  const resetWorkout = () => {
-    clockDispatch({
-      type: ClockActionType.RESET,
-    });
-
-    workoutDispatch({
-      type: WorkoutActionType.GOTO_FIRST_TIMER,
-    });
-  };
-
-  const pauseTimer = () => {
-    clockDispatch({ type: ClockActionType.PAUSE });
-  };
-
-  const resumeTimer = () => {
-    clockDispatch({ type: ClockActionType.RESUME });
-  };
+  const workoutManagement = useWorkoutManagementContext();
 
   return (
     <div className={styles["workout-controls"]}>
       <div className={styles["workout-controls__basic"]}>
         <Button
-          onClick={() => fastBackwardTimer()}
+          onClick={() => workoutManagement.fastBackwardTimer()}
           tooltip="Go to the previous timer, or reset if first timer."
         >
           <IoMdSkipBackward />
         </Button>
         {paused && !completed && (
-          <Button onClick={() => resumeTimer()} tooltip="Resume the workout">
+          <Button
+            onClick={() => workoutManagement.resumeTimer()}
+            tooltip="Resume the workout"
+          >
             <IoMdPlay />
           </Button>
         )}
         {!paused && !completed && (
-          <Button onClick={() => pauseTimer()} tooltip="Pause the workout">
+          <Button
+            onClick={() => workoutManagement.pauseTimer()}
+            tooltip="Pause the workout"
+          >
             <IoMdPause />
           </Button>
         )}
@@ -121,7 +59,7 @@ const WorkoutControls = () => {
           </Hide>
         )}
         <Button
-          onClick={() => fastForwardTimer()}
+          onClick={() => workoutManagement.fastForwardTimer()}
           tooltip="Go to the next timer, or mark this one complete if it's the last"
         >
           <IoMdSkipForward />
@@ -129,13 +67,13 @@ const WorkoutControls = () => {
       </div>
       <div className={styles["workout-controls__resets"]}>
         <Button
-          onClick={resetTimer}
+          onClick={() => workoutManagement.resetTimer()}
           tooltip="Return to the beginning of the timer"
         >
           Reset Timer
         </Button>
         <Button
-          onClick={resetWorkout}
+          onClick={() => workoutManagement.resetWorkout()}
           tooltip="Return to the beginning of the workout"
         >
           Reset Workout
