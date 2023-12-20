@@ -20,6 +20,9 @@ import {
   useClockDispatchContext,
 } from "@/contexts/ClockContext";
 
+// Ours - Types
+import { getTotalDuration } from "@/types/timer";
+
 // Ours - Reducers
 import { WorkoutActionType } from "@/reducers/workoutReducer";
 import { ClockActionType } from "@/reducers/clockReducer";
@@ -46,7 +49,7 @@ const WorkoutControls = () => {
     if (isLastTimer) {
       clockDispatch({
         type: ClockActionType.SET_ELAPSED,
-        payload: { elapsed: currentTimerOptions.workDuration },
+        payload: { elapsed: getTotalDuration(currentTimerOptions) },
       });
       clockDispatch({ type: ClockActionType.PAUSE });
     } else {
