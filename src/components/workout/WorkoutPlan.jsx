@@ -7,7 +7,7 @@ import { hasTimerFeature } from "@/types/timer";
 // Ours - Components
 import TimeDisplay from "@/components/ui/TimeDisplay";
 import Button from "@/components/form/Button";
-import Hide from "@/components/ui/Hide";
+import DeleteTimerButton from "@/components/workout/DeleteTimerButton";
 
 // Ours - Styles
 import styles from "./WorkoutPlan.module.css";
@@ -19,7 +19,7 @@ import styles from "./WorkoutPlan.module.css";
  * @param {function(string): void} props.onRemove
  * @returns {JSX.Element}
  */
-const WorkoutPlan = ({ plan, selectedTimerId, onRemove }) => {
+const WorkoutPlan = ({ plan, selectedTimerId }) => {
   const navigate = useNavigate();
 
   return (
@@ -57,7 +57,7 @@ const WorkoutPlan = ({ plan, selectedTimerId, onRemove }) => {
                 {hasTimerFeature(options.type, "rounds") && options.rounds}
               </td>
               <td className={styles.actions}>
-                <Button onClick={() => onRemove(options.id)}>Delete</Button>
+                <DeleteTimerButton id={options.id} />
                 <Button onClick={() => navigate("/edit/" + options.id)}>
                   Edit
                 </Button>
