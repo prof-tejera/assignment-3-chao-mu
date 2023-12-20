@@ -7,6 +7,9 @@ import { useWorkoutReducer } from "@/reducers/workoutReducer";
 const WorkoutContext = createContext(null);
 const WorkoutDispatchContext = createContext(null);
 
+/**
+ * @returns {import('@/types/workout').Workout}
+ */
 export const useWorkoutContext = () => {
   const context = useContext(WorkoutContext);
   if (!context) {

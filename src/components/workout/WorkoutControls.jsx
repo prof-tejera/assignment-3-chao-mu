@@ -22,6 +22,7 @@ import {
 
 // Ours - Types
 import { getTotalDuration } from "@/types/timer";
+import { isLastTimer, getCurrentTimer } from "@/types/workout";
 
 // Ours - Reducers
 import { WorkoutActionType } from "@/reducers/workoutReducer";
@@ -32,10 +33,14 @@ import Button from "@/components/form/Button";
 import Hide from "@/components/ui/Hide";
 
 const WorkoutControls = () => {
-  const { currentTimerOptions, isLastTimer, completed } = useWorkoutContext();
+  const workout = useWorkoutContext();
+  const { completed } = workout;
+
   const { paused } = useClockContext();
   const workoutDispatch = useWorkoutDispatchContext();
   const clockDispatch = useClockDispatchContext();
+
+  const currentTimerOptions = getCurrentTimer(workout);
 
   const fastBackwardTimer = () => {
     clockDispatch({
@@ -46,7 +51,7 @@ const WorkoutControls = () => {
   };
 
   const fastForwardTimer = () => {
-    if (isLastTimer) {
+    if (isLastTimer(workout)) {
       clockDispatch({
         type: ClockActionType.SET_ELAPSED,
         payload: { elapsed: getTotalDuration(currentTimerOptions) },

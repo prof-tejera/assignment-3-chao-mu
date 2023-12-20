@@ -4,11 +4,10 @@ import { useReducer } from "react";
 // Ours - Types
 import {
   createWorkout,
-  createWorkoutState,
   removeTimer,
   nextTimer,
-  timerCompleted,
-  timerReset,
+  signalTimerCompleted,
+  signalTimerReset,
 } from "@/types/workout";
 
 /**
@@ -29,7 +28,7 @@ export const WorkoutActionType = {
 };
 
 /**
- * @param {import("@/types/workout").WorkoutState} state
+ * @param {import("@/types/workout").Workout} state
  * @param {Object} action
  * @param {WorkoutActionType} action.type
  * @param {any} [action.payload]
@@ -39,12 +38,12 @@ const workoutReducer = (state, { type, payload }) => {
     case WorkoutActionType.TIMER_COMPLETED: {
       const { id } = payload;
 
-      return timerCompleted({ state, id });
+      return signalTimerCompleted(state, { id });
     }
     case WorkoutActionType.TIMER_RESET: {
       const { id } = payload;
 
-      return timerReset({ state, id });
+      return signalTimerReset(state, { id });
     }
     case WorkoutActionType.ADD_TIMER: {
       const { options } = payload;
@@ -55,7 +54,7 @@ const workoutReducer = (state, { type, payload }) => {
     case WorkoutActionType.REMOVE_TIMER: {
       const { id } = payload;
 
-      return removeTimer({ state, id });
+      return removeTimer(state, { id });
     }
     case WorkoutActionType.NEXT_TIMER: {
       return nextTimer(state);
@@ -102,7 +101,7 @@ const workoutReducer = (state, { type, payload }) => {
  * @returns {[import("@/types/workout").Workout, function({type: WorkoutActionType, [payload: any]})]}
  */
 export const useWorkoutReducer = () => {
-  const [state, dispatch] = useReducer(workoutReducer, createWorkoutState());
+  const [state, dispatch] = useReducer(workoutReducer, createWorkout());
 
-  return [createWorkout(state), dispatch];
+  return [state, dispatch];
 };

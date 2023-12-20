@@ -7,43 +7,44 @@ import { sum } from "@/utils/math";
 
 /**
  * @typedef {Object} Workout
- * @property {import("@/types/timer").TimerOptions[]} plan
- * @property {import("@/types/timer").TimerOptions | null} currentTimerOptions
- * @property {boolean} completed
- * @property {boolean} isLastTimer
- * @property {boolean} isFirstTimer
- */
-
-/**
- * @typedef {Object} WorkoutState
  * @property {Array<import("./timer").TimerOptions>} plan
  * @property {number} cursor
  * @property {boolean} completed
  */
 
-export const createWorkoutState = () => ({
+/**
+ * @returns {Workout}
+ */
+export const createWorkout = () => ({
   plan: [],
   cursor: 0,
   completed: false,
 });
 
-export const createWorkout = (state) => {
-  const { plan, cursor } = state;
-  const isLastTimer = cursor >= plan.length - 1;
-  const isFirstTimer = cursor <= 0;
-
-  const currentTimerOptions = plan[cursor] || null;
-
-  return {
-    ...state,
-    currentTimerOptions,
-    isLastTimer,
-    isFirstTimer,
-  };
+/**
+ * @param {Workout} workout
+ * @returns {boolean}
+ */
+export const isLastTimer = ({ plan, cursor }) => {
+  return cursor >= plan.length - 1;
 };
 
-export const removeTimer = ({ state, id }) => {
-  const { plan, cursor } = state;
+/**
+ * @param {Workout} workout
+ * @returns {boolean}
+ */
+export const isFirstTimer = ({ cursor }) => {
+  return cursor <= 0;
+};
+
+/**
+ * @param {Workout} workout
+ * @param {Object} params
+ * @param {string} params.id
+ * @returns {Workout}
+ */
+export const removeTimer = (workout, { id }) => {
+  const { plan, cursor } = workout;
   const index = plan.findIndex((timer) => timer.id === id);
 
   if (index === -1) {
@@ -53,7 +54,7 @@ export const removeTimer = ({ state, id }) => {
   // Did we remove the last cursor?
   if (plan.length === 1) {
     return {
-      ...state,
+      ...workout,
       plan: [],
       cursor: 0,
     };
@@ -80,54 +81,96 @@ export const removeTimer = ({ state, id }) => {
 
   const updatedPlan = [...plan.slice(0, index), ...plan.slice(index + 1)];
 
-  return { ...state, plan: updatedPlan, cursor: updatedCursor };
+  return { ...workout, plan: updatedPlan, cursor: updatedCursor };
 };
 
-export const timerReset = ({ state, id }) => {
-  const { plan, cursor } = state;
+/**
+ * Signal that timer has been reset
+ *
+ * @param {Workout} workout
+ * @param {Object} params
+ * @param {string} params.id Timer id
+ * @returns {Workout}
+ */
+export const signalTimerReset = (workout, { id }) => {
+  const { plan, cursor } = workout;
 
   // Are there no timers?
   if (plan.length > 0 && plan[cursor].id === id) {
     return {
-      ...state,
+      ...workout,
       completed: false,
     };
   }
 
-  return state;
+  return workout;
 };
 
-export const timerCompleted = ({ state, id }) => {
-  const { plan, cursor } = state;
+/**
+ * Signal that timer has completed
+ *
+ * @param {Workout} workout
+ * @param {Object} params
+ * @param {string} params.id Timer id
+ *
+ * @returns {Workout}
+ */
+export const signalTimerCompleted = (workout, { id }) => {
+  const { plan, cursor } = workout;
 
   // Are there no timers?
   if (plan.length === 0) {
-    return state;
+    return workout;
   }
 
   // Is the current timer not the completed timer?
   if (plan[cursor].id !== id) {
-    return state;
+    return workout;
   }
 
   // Was it the last timer?
   if (cursor === plan.length - 1) {
-    return { ...state, completed: true };
+    return { ...workout, completed: true };
   }
 
-  return nextTimer(state);
+  return nextTimer(workout);
 };
 
-export const nextTimer = (state) => ({
-  ...state,
-  cursor: Math.min(state.cursor + 1, state.plan.length - 1),
+/**
+ * Advance to the next timer
+ *
+ * @param {Workout} workout
+ *
+ * @returns {Workout}
+ */
+export const nextTimer = (workout) => ({
+  ...workout,
+  cursor: Math.min(workout.cursor + 1, workout.plan.length - 1),
 });
 
-export const getWorkoutElapsed = ({ workout, clock }) => {
+/**
+ * Get elapsed time in the workout
+ *
+ * @param {Workout} workout
+ * @param {Object} params
+ * @param {import("./clock").Clock} params.clock
+ *
+ * @returns {number}
+ */
+export const getWorkoutElapsed = (workout, { clock }) => {
   const { plan, cursor } = workout;
 
   return (
     sum(plan.slice(0, cursor).map((options) => getTotalDuration(options))) +
     getElapsed(clock)
   );
+};
+
+/**
+ * Get current timer
+ *
+ * @returns {import("./timer").TimerOptions}
+ */
+export const getCurrentTimer = ({ plan, cursor }) => {
+  return plan[cursor];
 };

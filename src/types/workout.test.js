@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 
 // Ours - Tested functions
-import { removeTimer, timerCompleted } from "./workout";
+import { removeTimer, signalTimerCompleted } from "./workout";
 
 // uuid
 import { v4 as uuidv4 } from "uuid";
@@ -26,7 +26,7 @@ const createMockTimerOptions = ({
 const createMockPlan = (length) =>
   Array.from({ length }, () => createMockTimerOptions());
 
-const createMockWorkoutState = ({ plan, cursor, completed = false }) => ({
+const createMockWorkout = ({ plan, cursor, completed = false }) => ({
   plan,
   cursor,
   completed,
@@ -35,14 +35,14 @@ const createMockWorkoutState = ({ plan, cursor, completed = false }) => ({
 describe("Workout", () => {
   test("When last timer completes, workout completes", () => {
     const plan = createMockPlan(3);
-    const state = createMockWorkoutState({
+    const workout = createMockWorkout({
       plan: plan,
       cursor: plan.length - 1,
     });
 
-    const lastId = state.plan[state.plan.length - 1].id;
+    const lastId = workout.plan[workout.plan.length - 1].id;
 
-    const { completed } = timerCompleted({ state, id: lastId });
+    const { completed } = signalTimerCompleted(workout, { id: lastId });
 
     expect(completed).toBe(true);
   });
@@ -51,14 +51,14 @@ describe("Workout", () => {
     const planlength = 3;
     const notLastCursor = planlength - 2;
 
-    const state = createMockWorkoutState({
+    const workout = createMockWorkout({
       plan: createMockPlan(3),
       cursor: notLastCursor,
     });
 
-    const notLastId = state.plan[notLastCursor].id;
+    const notLastId = workout.plan[notLastCursor].id;
 
-    const { completed } = timerCompleted({ state, id: notLastId });
+    const { completed } = signalTimerCompleted(workout, { id: notLastId });
 
     expect(completed).toBe(false);
   });
@@ -66,17 +66,16 @@ describe("Workout", () => {
   test("Removing selected timer selects next timer, if first", () => {
     const initialLength = 3;
 
-    const state = createMockWorkoutState({
+    const workout = createMockWorkout({
       plan: createMockPlan(initialLength),
       cursor: 0,
     });
 
-    const selectedId = state.plan[state.cursor].id;
-    const nextId = state.plan[state.cursor + 1].id;
+    const selectedId = workout.plan[workout.cursor].id;
+    const nextId = workout.plan[workout.cursor + 1].id;
 
     const removedId = selectedId;
-    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer({
-      state,
+    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer(workout, {
       id: removedId,
     });
 
@@ -90,16 +89,15 @@ describe("Workout", () => {
     const initialCursor = 1;
     const initialLength = 3;
 
-    const state = createMockWorkoutState({
+    const workout = createMockWorkout({
       plan: createMockPlan(initialLength),
       cursor: initialCursor,
     });
 
-    const selectedId = state.plan[state.cursor].id;
-    const removedId = state.plan[initialCursor + 1].id;
+    const selectedId = workout.plan[workout.cursor].id;
+    const removedId = workout.plan[initialCursor + 1].id;
 
-    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer({
-      state,
+    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer(workout, {
       id: removedId,
     });
 
@@ -112,16 +110,15 @@ describe("Workout", () => {
     const initialCursor = 1;
     const initialLength = 3;
 
-    const state = createMockWorkoutState({
+    const workout = createMockWorkout({
       plan: createMockPlan(initialLength),
       cursor: initialCursor,
     });
 
-    const selectedId = state.plan[state.cursor].id;
-    const removedId = state.plan[state.cursor - 1].id;
+    const selectedId = workout.plan[workout.cursor].id;
+    const removedId = workout.plan[workout.cursor - 1].id;
 
-    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer({
-      state,
+    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer(workout, {
       id: removedId,
     });
 
@@ -134,17 +131,16 @@ describe("Workout", () => {
     const initialLength = 3;
     const initialCursor = initialLength - 1;
 
-    const state = {
+    const workout = createMockWorkout({
       plan: createMockPlan(initialLength),
       cursor: initialCursor,
-    };
+    });
 
-    const selectedId = state.plan[state.cursor].id;
-    const previousId = state.plan[state.cursor - 1].id;
+    const selectedId = workout.plan[workout.cursor].id;
+    const previousId = workout.plan[workout.cursor - 1].id;
 
     const removedId = selectedId;
-    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer({
-      state,
+    const { plan: updatedPlan, cursor: updatedCursor } = removeTimer(workout, {
       id: removedId,
     });
 

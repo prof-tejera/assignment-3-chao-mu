@@ -24,12 +24,15 @@ import useInterval from "@/hooks/useInterval";
 
 // Ours - Types
 import { createTimerSnapshot, TimerStatus } from "@/types/timer";
+import { isLastTimer, getCurrentTimer } from "@/types/workout";
 
 const TimerContainer = () => {
   const clock = useClockContext();
   const clockDispatch = useClockDispatchContext();
 
-  const { currentTimerOptions, isLastTimer } = useWorkoutContext();
+  const workout = useWorkoutContext();
+  const currentTimerOptions = getCurrentTimer(workout);
+
   const workoutDispatch = useWorkoutDispatchContext();
   const [timerSnapshot, setTimerSnapshot] = useState(() =>
     createTimerSnapshot({

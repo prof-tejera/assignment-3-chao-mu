@@ -5,6 +5,9 @@ import TimerDisplayPlaceholder from "@/components/timer/TimerDisplayPlaceholder"
 import TimerContainer from "@/components/timer/TimerContainer";
 import WorkoutControls from "@/components/workout/WorkoutControls";
 
+// Ours - Types
+import { getCurrentTimer } from "@/types/workout";
+
 // Ours - Context
 import {
   useWorkoutContext,
@@ -18,7 +21,9 @@ import { WorkoutActionType } from "@/reducers/workoutReducer";
 import styles from "./HomePage.module.css";
 
 const HomePage = () => {
-  const { plan, currentTimerOptions } = useWorkoutContext();
+  const workout = useWorkoutContext();
+  const { plan } = workout;
+  const currentTimerOptions = getCurrentTimer(workout);
   const workoutDispatch = useWorkoutDispatchContext();
 
   const notReady = plan.length === 0;
