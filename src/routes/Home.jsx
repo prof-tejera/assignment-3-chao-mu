@@ -13,9 +13,9 @@ import { useWorkoutContext } from "@/contexts/WorkoutContext";
 import { useWorkoutManagementContext } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Style
-import styles from "./HomePage.module.css";
+import styles from "./Home.module.css";
 
-const HomePage = () => {
+const Home = () => {
   const workout = useWorkoutContext();
   const { plan } = workout;
 
@@ -45,4 +45,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

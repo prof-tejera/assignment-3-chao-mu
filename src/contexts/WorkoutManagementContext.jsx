@@ -51,7 +51,9 @@ export const WorkoutManagementProvider = ({ children }) => {
   const currentTimerOptions = Workout.getCurrentTimer(workout);
   const currentTimerId = currentTimerOptions?.id;
   const isLastTimer = Workout.isLastTimer(workout);
-  const totalTimerDuration = getTotalDuration(currentTimerOptions);
+  const totalTimerDuration = currentTimerOptions
+    ? getTotalDuration(currentTimerOptions)
+    : null;
 
   /** @type {WorkoutManagement} */
   const workoutManagement = {
@@ -159,6 +161,10 @@ export const WorkoutManagementProvider = ({ children }) => {
       workoutDispatch({ type: WorkoutActionType.PREV_TIMER });
     }, [clockDispatch, workoutDispatch]),
     fastForwardTimer: useCallback(() => {
+      if (totalTimerDuration === null) {
+        return;
+      }
+
       if (isLastTimer) {
         clockDispatch({
           type: ClockActionType.SET_ELAPSED,

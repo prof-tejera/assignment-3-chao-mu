@@ -12,7 +12,7 @@ import { TimerStatus } from "@/types/timer";
 import { createClock } from "@/types/clock";
 
 // Ours - Styles
-import styles from "./DocumentationPage.module.css";
+import styles from "./Documentation.module.css";
 
 // Ours - Data
 import mockWorkout from "@/data/mock-workout.json";
@@ -86,7 +86,7 @@ const docs = [
   },
 ];
 
-const DocumentationPage = () => (
+const Documentation = () => (
   <div className={styles["component-list"]}>
     {docs.map(({ comp: Comp, name, props }) => {
       return (
@@ -101,4 +101,4 @@ const DocumentationPage = () => (
   </div>
 );
 
-export default DocumentationPage;
+export default Documentation;

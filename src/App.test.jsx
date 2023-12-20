@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 import { describe, test } from "vitest";
 
-import routes from "./routes";
+import routes from "@/routes/config";
 
 const renderRoute = (route) => {
   const router = createMemoryRouter(routes, { initialEntries: [route] });

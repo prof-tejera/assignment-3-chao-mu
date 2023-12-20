@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import EditTimerForm from "@/components/workout/EditTimerForm";
 
 // Ours - Styles
-import styles from "./EditPage.module.css";
+import styles from "./Edit.module.css";
 
-const EditPage = () => {
+const Edit = () => {
   const { timerId } = useParams();
 
   return (
@@ -17,4 +17,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default Edit;

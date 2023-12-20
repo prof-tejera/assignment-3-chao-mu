@@ -1,9 +1,9 @@
 // Ours - Components
 import AddTimerForm from "@/components/workout/AddTimerForm";
 
-import styles from "./AddPage.module.css";
+import styles from "./Add.module.css";
 
-const AddPage = () => {
+const Add = () => {
   return (
     <section className={styles["add-page"]}>
       <AddTimerForm />
@@ -11,4 +11,4 @@ const AddPage = () => {
   );
 };
 
-export default AddPage;
+export default Add;
