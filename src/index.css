@@ -9,6 +9,9 @@
 }
 
 :root {
+  --font-family-mono: "Roboto Mono", monospace;
+  --font-family-time: var(--font-family-mono);
+
   /* Fluid font sizes calculated with https://www.fluid-type-scale.com/ */
   --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
   --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);

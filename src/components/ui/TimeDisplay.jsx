@@ -1,6 +1,11 @@
+// prop-types
 import PropTypes from "prop-types";
 
+// Ours - Utils
 import { padTime, splitTimeMs } from "@/utils/time.js";
+
+// Ours - Style
+import styles from "./TimeDisplay.module.css";
 
 const TimeDisplay = ({ timeMs, showMs }) => {
   const { hours, minutes, seconds, ms } = splitTimeMs(timeMs);
@@ -17,7 +22,7 @@ const TimeDisplay = ({ timeMs, showMs }) => {
     prettyTime += `.${padTime(ms, 3)}`;
   }
 
-  return <time>{prettyTime}</time>;
+  return <time className={styles["time"]}>{prettyTime}</time>;
 };
 
 TimeDisplay.propTypes = {
