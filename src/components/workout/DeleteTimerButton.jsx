@@ -20,7 +20,8 @@ const DeleteTimerButton = ({ id }) => {
     });
 
     clockDispatch({
-      type: ClockActionType.RESET,
+      type: ClockActionType.SET_ELAPSED,
+      payload: { elapsed: 0 },
     });
   };
 
