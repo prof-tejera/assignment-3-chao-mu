@@ -7,6 +7,9 @@ import { useClockReducer } from "@/reducers/clockReducer";
 const ClockContext = createContext(null);
 const ClockDispatchContext = createContext(null);
 
+/**
+ * @returns {import('@/types/clock').Clock}
+ */
 export const useClockContext = () => {
   const context = useContext(ClockContext);
   if (!context) {
