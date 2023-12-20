@@ -17,6 +17,11 @@ import TimeDisplay from "@/components/ui/TimeDisplay";
 // Ours - Styles
 import styles from "./WorkoutSummary.module.css";
 
+/**
+ * @param {object} props
+ * @param {import('@/types/workout').Workout} props.workout
+ * @param {import('@/types/clock').Clock} props.clock
+ */
 const WorkoutSummary = ({ workout, clock }) => {
   const { plan } = workout;
 
@@ -35,7 +40,7 @@ const WorkoutSummary = ({ workout, clock }) => {
   const remainingTime = totalTime - elapsed;
 
   useInterval(() => {
-    setElapsed(getWorkoutElapsed({ workout, clock }));
+    setElapsed(getWorkoutElapsed(workout, { clock }));
   }, 20);
 
   return (
