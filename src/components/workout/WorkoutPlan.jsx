@@ -57,12 +57,10 @@ const WorkoutPlan = ({ plan, selectedTimerId, onRemove }) => {
                 {hasTimerFeature(options.type, "rounds") && options.rounds}
               </td>
               <td className={styles.actions}>
-                <Hide visible={options.id !== selectedTimerId}>
-                  <Button onClick={() => onRemove(options.id)}>Delete</Button>
-                  <Button onClick={() => navigate("/edit/" + options.id)}>
-                    Edit
-                  </Button>
-                </Hide>
+                <Button onClick={() => onRemove(options.id)}>Delete</Button>
+                <Button onClick={() => navigate("/edit/" + options.id)}>
+                  Edit
+                </Button>
               </td>
             </tr>
           ))}
