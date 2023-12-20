@@ -9,12 +9,15 @@ import TimeDisplay from "@/components/ui/TimeDisplay";
 
 // Ours - Types
 import { TimerStatus } from "@/types/timer";
+import { createClock } from "@/types/clock";
 
 // Ours - Styles
 import styles from "./DocumentationPage.module.css";
 
 // Ours - Data
 import mockWorkout from "@/data/mock-workout.json";
+
+const mockPlan = mockWorkout.plan;
 
 const exampleTABATA = {
   type: "TABATA",
@@ -28,8 +31,8 @@ const docs = [
     comp: WorkoutPlan,
     name: "WorkoutPlan",
     props: {
-      plan: mockWorkout,
-      selectedTimerId: mockWorkout[2].id,
+      plan: mockPlan,
+      selectedTimerId: mockPlan[2].id,
       onRemove: (id) => {
         console.log("Removing timer", id);
       },
@@ -77,7 +80,8 @@ const docs = [
     comp: WorkoutSummary,
     name: "WorkoutSummary",
     props: {
-      plan: mockWorkout,
+      workout: mockWorkout,
+      clock: createClock(),
     },
   },
 ];

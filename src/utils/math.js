@@ -16,3 +16,5 @@ export const findNearestNumber = (value, numbers) => {
     numbers[0],
   );
 };
+
+export const sum = (numbers) => numbers.reduce((a, b) => a + b, 0);

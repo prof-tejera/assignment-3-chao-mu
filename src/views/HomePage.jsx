@@ -1,6 +1,6 @@
 // Ours - Components
 import WorkoutPlan from "@/components/workout/WorkoutPlan";
-import WorkoutSummary from "@/components/workout/WorkoutSummary";
+import WorkoutSummaryContainer from "@/components/workout/WorkoutSummaryContainer";
 import TimerDisplayPlaceholder from "@/components/timer/TimerDisplayPlaceholder";
 import TimerContainer from "@/components/timer/TimerContainer";
 import WorkoutControls from "@/components/workout/WorkoutControls";
@@ -38,7 +38,7 @@ const HomePage = () => {
         <>
           <TimerContainer />
           <WorkoutControls />
-          <WorkoutSummary plan={plan} />
+          <WorkoutSummaryContainer />
           <WorkoutPlan
             plan={plan}
             selectedTimerId={currentTimerOptions && currentTimerOptions.id}

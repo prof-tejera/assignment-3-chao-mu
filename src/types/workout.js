@@ -1,3 +1,10 @@
+// Ours - Types
+import { getElapsed } from "./clock";
+import { getTotalDuration } from "./timer";
+
+// Ours - Utils
+import { sum } from "@/utils/math";
+
 /**
  * @typedef {Object} Workout
  * @property {import("@/types/timer").TimerOptions[]} plan
@@ -115,3 +122,12 @@ export const nextTimer = (state) => ({
   ...state,
   cursor: Math.min(state.cursor + 1, state.plan.length - 1),
 });
+
+export const getWorkoutElapsed = ({ workout, clock }) => {
+  const { plan, cursor } = workout;
+
+  return (
+    sum(plan.slice(0, cursor).map((options) => getTotalDuration(options))) +
+    getElapsed(clock)
+  );
+};

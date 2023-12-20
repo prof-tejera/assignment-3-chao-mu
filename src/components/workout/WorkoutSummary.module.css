@@ -6,10 +6,14 @@
   border-bottom: 3px solid var(--clr-primary-500);
 }
 
-.workout-summary > :first-child {
+.tallies {
   display: grid;
   grid-template-columns: max-content 1fr;
   column-gap: var(--spacing-xl);
+}
+
+.remaining-row {
+  margin-top: var(--spacing-md);
 }
 
 .workout-summary > :last-child {
