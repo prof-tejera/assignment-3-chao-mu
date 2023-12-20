@@ -3,9 +3,16 @@ import PropTypes from "prop-types";
 import { padTime, splitTimeMs } from "@/utils/time.js";
 
 const TimeDisplay = ({ timeMs, showMs }) => {
-  const { minutes, seconds, ms } = splitTimeMs(timeMs);
+  const { hours, minutes, seconds, ms } = splitTimeMs(timeMs);
 
-  let prettyTime = [minutes, seconds].map((t) => padTime(t)).join(":");
+  let components = [];
+  if (hours > 0) {
+    components.push(hours);
+  }
+
+  components = [...components, minutes, seconds];
+
+  let prettyTime = components.map((t) => padTime(t)).join(":");
   if (showMs) {
     prettyTime += `.${padTime(ms, 3)}`;
   }
