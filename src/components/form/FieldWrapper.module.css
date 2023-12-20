@@ -7,6 +7,7 @@
 }
 
 .field-wrapper input,
+.field-wrapper textarea,
 .field-wrapper select {
   border: 2px solid hsl(218, 51%, 37%);
   background-color: white;

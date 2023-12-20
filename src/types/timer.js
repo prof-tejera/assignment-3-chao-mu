@@ -7,6 +7,7 @@ import { getElapsed } from "@/types/clock";
  * @property {number} workDuration - Duration of work period in miliseconds.
  * @property {number} restDuration - Duration of rest period in miliseconds.
  * @property {number} rounds - Number of rounds.
+ * @property {string} description - Description of the timer.
  * @property {boolean} countUp - Indicates if the timer counts up
  */
 
@@ -56,7 +57,7 @@ export const TimerStatus = {
  */
 export const TimerOptionsPresets = {
   Stopwatch: {
-    features: ["workDuration"],
+    features: ["workDuration", "description"],
     constants: {
       restDuration: 0,
       rounds: 1,
@@ -64,7 +65,7 @@ export const TimerOptionsPresets = {
     },
   },
   Countdown: {
-    features: ["workDuration"],
+    features: ["workDuration", "description"],
     constants: {
       restDuration: 0,
       rounds: 1,
@@ -72,14 +73,14 @@ export const TimerOptionsPresets = {
     },
   },
   XY: {
-    features: ["workDuration", "rounds"],
+    features: ["workDuration", "rounds", "description"],
     constants: {
       restDuration: 0,
       countUp: false,
     },
   },
   TABATA: {
-    features: ["workDuration", "restDuration", "rounds"],
+    features: ["workDuration", "restDuration", "rounds", "description"],
     constants: {
       countUp: false,
     },

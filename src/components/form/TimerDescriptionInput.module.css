@@ -1,0 +1,24 @@
+.textarea {
+  align-self: stretch;
+}
+
+.help-input {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: var(--spacing-xs);
+}
+
+.help {
+  font-size: var(--font-size-base);
+  font-style: italic;
+  color: var(--clr-neutral-400);
+}
+
+.error {
+  color: var(--clr-error);
+}
+
+.acceptable {
+  color: var(--clr-neutral-500);
+}

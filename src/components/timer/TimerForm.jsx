@@ -10,6 +10,7 @@ import { TimerOptionsPresets as presets } from "@/types/timer";
 // Ours - Components
 import TimeInput from "@/components/form/TimeInput";
 import PositiveIntegerInput from "@/components/form/PositiveIntegerInput";
+import TimerDescriptionInput from "@/components/form/TimerDescriptionInput";
 import Select from "@/components/form/Select";
 import Button from "@/components/form/Button";
 
@@ -23,6 +24,7 @@ import styles from "./TimerForm.module.css";
 const TimerForm = ({ values, onSubmit }) => {
   let defaultValues = {
     type: "Stopwatch",
+    description: "",
   };
 
   if (values) {
@@ -75,6 +77,9 @@ const TimerForm = ({ values, onSubmit }) => {
         )}
         {enabledFields.includes("rounds") && (
           <PositiveIntegerInput required={true} label="Rounds" name="rounds" />
+        )}
+        {enabledFields.includes("description") && (
+          <TimerDescriptionInput name="description" />
         )}
         <Button submit>Save</Button>
       </form>

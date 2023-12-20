@@ -10,7 +10,7 @@ import { hasTimerFeature, TimerStatus } from "@/types/timer";
 import styles from "./TimerDisplay.module.css";
 
 const TimerDisplay = ({ timerSnapshot: { options, progress } }) => {
-  const { rounds, type, countUp } = options;
+  const { rounds, type, countUp, description } = options;
   const {
     round,
     roundElapsed,
@@ -41,29 +41,38 @@ const TimerDisplay = ({ timerSnapshot: { options, progress } }) => {
   const hasRoundFeature = hasTimerFeature(type, "rounds");
 
   return (
-    <TimerDisplayPanel>
-      <div className={styles["header"]}>
-        <div className={styles["type"]}>{type}</div>
-      </div>
-      <div className={[styles["featured"]].join(" ")}>
-        <div className={styles["time"]}>
-          <TimeDisplay timeMs={displayedElapsed} showMs />
+    <section className={styles["timer-display"]}>
+      <TimerDisplayPanel>
+        <div className={styles["header"]}>
+          <div className={styles["type"]}>{type}</div>
         </div>
-        <div className={styles["status"]}>{displayStatus}</div>
-      </div>
-
-      <div className={styles["subgroup"]}>
-        {hasRoundFeature && (
-          <div className={styles["rounds"]}>
-            Round {round} of {rounds}
+        <div className={[styles["featured"]].join(" ")}>
+          <div className={styles["time"]}>
+            <TimeDisplay timeMs={displayedElapsed} showMs />
           </div>
-        )}
-        <div className={styles["progress"]}>
-          {hasRoundFeature && <Progress max={1} value={roundProgress} />}
-          <Progress max={1} value={totalProgress} />
+          <div className={styles["status"]}>{displayStatus}</div>
         </div>
-      </div>
-    </TimerDisplayPanel>
+
+        <div className={styles["subgroup"]}>
+          {hasRoundFeature && (
+            <div className={styles["rounds"]}>
+              Round {round} of {rounds}
+            </div>
+          )}
+          <div className={styles["progress"]}>
+            {hasRoundFeature && <Progress max={1} value={roundProgress} />}
+            <Progress max={1} value={totalProgress} />
+          </div>
+        </div>
+      </TimerDisplayPanel>
+      {description ? (
+        <div className={styles["description"]}>{description}</div>
+      ) : (
+        <div className={styles["description-placeholder"]}>
+          No description provided
+        </div>
+      )}
+    </section>
   );
 };
 

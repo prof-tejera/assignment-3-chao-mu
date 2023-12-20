@@ -28,6 +28,7 @@
   --clr-odd-rows: hsla(0, 0%, 0%, 0.04);
 
   --clr-neutral-300: hsl(0, 0%, 60%);
+  --clr-neutral-400: hsl(0, 0%, 30%);
 
   --clr-primary-50: hsl(257, 49%, 95%);
   --clr-primary-100: hsl(257, 49%, 85%);
