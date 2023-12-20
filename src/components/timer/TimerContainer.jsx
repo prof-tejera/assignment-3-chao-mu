@@ -29,16 +29,16 @@ const TimerContainer = () => {
   const clock = useClockContext();
   const clockDispatch = useClockDispatchContext();
 
+  const { currentTimerOptions, isLastTimer } = useWorkoutContext();
+  const workoutDispatch = useWorkoutDispatchContext();
+  const [timerSnapshot, setTimerSnapshot] = useState(null);
+
   // Pause timer on unmount
   useEffect(() => {
     return () => {
       clockDispatch({ type: ClockActionType.PAUSE });
     };
   }, [clockDispatch]);
-
-  const { currentTimerOptions } = useWorkoutContext();
-  const workoutDispatch = useWorkoutDispatchContext();
-  const [timerSnapshot, setTimerSnapshot] = useState(null);
 
   useInterval(() => {
     const updatedTimerSnapshot = createTimerSnapshot({
@@ -55,6 +55,13 @@ const TimerContainer = () => {
         type: WorkoutActionType.TIMER_COMPLETED,
         payload: { id },
       });
+
+      if (!isLastTimer) {
+        clockDispatch({
+          type: ClockActionType.SET_ELAPSED,
+          payload: { elapsed: 0 },
+        });
+      }
     }
 
     setTimerSnapshot(updatedTimerSnapshot);
