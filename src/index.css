@@ -48,6 +48,7 @@
   --spacing-md: 0.75rem;
   --spacing-lg: 1rem;
   --spacing-xl: 2rem;
+  --spacing-xxl: 4rem;
 
   --border-radius-none: 0;
   --border-radius-xs: 2px;
@@ -74,5 +75,4 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
