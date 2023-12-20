@@ -1,7 +1,12 @@
 import { useReducer } from "react";
 
 // Types - Clock
-import { createClock, getElapsed } from "@/types/clock";
+import {
+  createClock,
+  pauseClock,
+  resumeClock,
+  setElapsed,
+} from "@/types/clock";
 
 const initialState = createClock();
 
@@ -25,21 +30,13 @@ export const ClockActionType = {
  * @param {ClockActionType} action.type
  * @param {any} [action.payload]
  */
-const clockReducer = (state, { type, payload }) => {
+export const clockReducer = (state, { type, payload }) => {
   switch (type) {
     case ClockActionType.RESUME: {
-      return {
-        ...state,
-        startedAt: Date.now(),
-        paused: false,
-      };
+      return resumeClock(state);
     }
     case ClockActionType.PAUSE: {
-      return {
-        ...state,
-        elapsedAtPause: getElapsed(state),
-        paused: true,
-      };
+      return pauseClock(state);
     }
     case ClockActionType.RESET: {
       return { ...initialState };
@@ -54,11 +51,7 @@ const clockReducer = (state, { type, payload }) => {
     case ClockActionType.SET_ELAPSED: {
       const { elapsed } = payload;
 
-      return {
-        ...state,
-        startedAt: null,
-        elapsedAtPause: elapsed,
-      };
+      return setElapsed(state, { elapsed });
     }
     default: {
       throw Error("Unknown action received by clockReducer: " + type);
