@@ -2,7 +2,13 @@
 import { createContext, useContext } from "react";
 
 // Ours - Reducer
-import { useWorkoutReducer } from "@/reducers/workoutReducer";
+import { workoutReducer } from "@/reducers/workoutReducer";
+
+// Ours - Hooks
+import useSessionReducer from "@/hooks/useSessionReducer";
+
+// Ours - Types
+import { createWorkout } from "@/types/workout";
 
 const WorkoutContext = createContext(null);
 const WorkoutDispatchContext = createContext(null);
@@ -31,7 +37,11 @@ export const useWorkoutDispatchContext = () => {
 };
 
 export const WorkoutProvider = ({ children }) => {
-  const [workout, dispatch] = useWorkoutReducer();
+  const [workout, dispatch] = useSessionReducer({
+    key: "workout",
+    reducer: workoutReducer,
+    initialState: createWorkout(),
+  });
 
   return (
     <WorkoutContext.Provider value={workout}>

@@ -15,6 +15,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
+    "@uidotdev/usehooks": "^2.4.1",
     "import": "^0.0.6",
     "jsdom": "^23.0.1",
     "prop-types": "^15.8.1",

@@ -3,7 +3,6 @@ import { useReducer } from "react";
 
 // Ours - Types
 import {
-  createWorkout,
   removeTimer,
   nextTimer,
   signalTimerCompleted,
@@ -33,7 +32,7 @@ export const WorkoutActionType = {
  * @param {WorkoutActionType} action.type
  * @param {any} [action.payload]
  */
-const workoutReducer = (state, { type, payload }) => {
+export const workoutReducer = (state, { type, payload }) => {
   switch (type) {
     case WorkoutActionType.TIMER_COMPLETED: {
       const { id } = payload;
@@ -93,15 +92,4 @@ const workoutReducer = (state, { type, payload }) => {
       throw Error("Unknown action received by workoutReducer: " + type);
     }
   }
-};
-
-/**
- * Use the workout reducer, which manages internal time. Must be dispatched ticks.
- *
- * @returns {[import("@/types/workout").Workout, function({type: WorkoutActionType, [payload: any]})]}
- */
-export const useWorkoutReducer = () => {
-  const [state, dispatch] = useReducer(workoutReducer, createWorkout());
-
-  return [state, dispatch];
 };

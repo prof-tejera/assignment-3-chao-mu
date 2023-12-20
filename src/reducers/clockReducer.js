@@ -58,5 +58,3 @@ export const clockReducer = (state, { type, payload }) => {
     }
   }
 };
-
-export const useClockReducer = () => useReducer(clockReducer, initialState);
