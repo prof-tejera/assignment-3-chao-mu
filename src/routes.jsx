@@ -3,6 +3,7 @@ import SiteLayout from "@/views/SiteLayout";
 import HomePage from "@/views/HomePage";
 import AddPage from "@/views/AddPage";
 import EditPage from "@/views/EditPage";
+import FormPageLayout from "@/views/FormPageLayout";
 import DocumentationPage from "@/views/DocumentationPage";
 
 // Ours - Contexts
@@ -29,12 +30,17 @@ export default [
         element: <HomePage />,
       },
       {
-        path: "add",
-        element: <AddPage />,
-      },
-      {
-        path: "edit/:timerId",
-        element: <EditPage />,
+        element: <FormPageLayout />,
+        children: [
+          {
+            path: "add",
+            element: <AddPage />,
+          },
+          {
+            path: "edit/:timerId",
+            element: <EditPage />,
+          },
+        ],
       },
       {
         path: "docs",
