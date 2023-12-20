@@ -1,11 +1,15 @@
 // React
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Ours - Components
 import TimerDisplay from "@/components/timer/TimerDisplay";
 
 // Ours - Context
-import { useClockContext } from "@/contexts/ClockContext";
+import {
+  useClockContext,
+  useClockDispatchContext,
+} from "@/contexts/ClockContext";
+
 import {
   useWorkoutContext,
   useWorkoutDispatchContext,
@@ -13,6 +17,7 @@ import {
 
 // Ours - Reducers
 import { WorkoutActionType } from "@/reducers/workoutReducer";
+import { ClockActionType } from "@/reducers/clockReducer";
 
 // Ours - Hooks
 import useInterval from "@/hooks/useInterval";
@@ -22,6 +27,14 @@ import { createTimerSnapshot, TimerStatus } from "@/types/timer";
 
 const TimerContainer = () => {
   const clock = useClockContext();
+  const clockDispatch = useClockDispatchContext();
+
+  // Pause timer on unmount
+  useEffect(() => {
+    return () => {
+      clockDispatch({ type: ClockActionType.PAUSE });
+    };
+  }, [clockDispatch]);
 
   const { currentTimerOptions } = useWorkoutContext();
   const workoutDispatch = useWorkoutDispatchContext();
