@@ -26,6 +26,7 @@
   font-size: var(--font-size-xxl);
   color: var(--color-error);
   font-style: italic;
+  text-align: center;
 }
 
 .reset {
