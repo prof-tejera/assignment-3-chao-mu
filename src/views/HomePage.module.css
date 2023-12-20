@@ -4,19 +4,3 @@
   align-items: center;
   row-gap: var(--spacing-xl);
 }
-
-.top-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: var(--spacing-xl);
-}
-
-.overview {
-  display: grid;
-  place-items: end;
-}
-
-.control-column {
-  display: grid;
-  place-items: end start;
-}

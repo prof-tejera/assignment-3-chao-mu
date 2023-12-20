@@ -33,22 +33,12 @@ const HomePage = () => {
   return (
     <div className={styles["home-page"]}>
       {notReady ? (
-        <div className={styles["top-row"]}>
-          <div />
-          <TimerDisplayPlaceholder />
-          <div />
-        </div>
+        <TimerDisplayPlaceholder />
       ) : (
         <>
-          <div className={styles["top-row"]}>
-            <div className={styles.overview}>
-              <WorkoutSummary plan={plan} />
-            </div>
-            <TimerContainer />
-            <div className={styles["control-column"]}>
-              <WorkoutControls />
-            </div>
-          </div>
+          <TimerContainer />
+          <WorkoutControls />
+          <WorkoutSummary plan={plan} />
           <WorkoutPlan
             plan={plan}
             selectedTimerId={currentTimerOptions && currentTimerOptions.id}
