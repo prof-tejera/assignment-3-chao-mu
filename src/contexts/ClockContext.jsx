@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 import { clockReducer } from "@/reducers/clockReducer";
 
 // Ours - Hooks
-import useSessionReducer from "@/hooks/useSessionReducer";
+import useLocalStorageReducer from "@/hooks/useLocalStorageReducer";
 import useInterval from "@/hooks/useInterval";
 
 // Ours - Types
@@ -39,7 +39,7 @@ export const useClockDispatchContext = () => {
 };
 
 export const ClockProvider = ({ children }) => {
-  const [clock, dispatch, save] = useSessionReducer({
+  const [clock, dispatch, save] = useLocalStorageReducer({
     key: StorageKey,
     reducer: clockReducer,
     initialState: createClock(),

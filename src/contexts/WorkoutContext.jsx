@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 import { workoutReducer } from "@/reducers/workoutReducer";
 
 // Ours - Hooks
-import useSessionReducer from "@/hooks/useSessionReducer";
+import useLocalStorageReducer from "@/hooks/useLocalStorageReducer";
 
 // Ours - Types
 import { createWorkout } from "@/types/workout";
@@ -37,7 +37,7 @@ export const useWorkoutDispatchContext = () => {
 };
 
 export const WorkoutProvider = ({ children }) => {
-  const [workout, dispatch] = useSessionReducer({
+  const [workout, dispatch] = useLocalStorageReducer({
     key: "workout",
     reducer: workoutReducer,
     initialState: createWorkout(),
