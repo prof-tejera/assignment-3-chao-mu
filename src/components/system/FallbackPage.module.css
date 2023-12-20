@@ -7,6 +7,7 @@
   flex-grow: 1;
   background-color: #002366;
   color: #ffffff;
+  padding: 0 var(--spacing-xl);
 }
 
 .hgroup {
