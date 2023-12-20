@@ -60,10 +60,18 @@ const TimerForm = ({ values, onSubmit }) => {
         <Select label="Timer Type" name="type" options={Object.keys(presets)} />
 
         {enabledFields.includes("workDuration") && (
-          <TimeInput label="Work Duration" name="workDuration" />
+          <TimeInput
+            label="Work Duration"
+            name="workDuration"
+            defaultValue={defaultValues["workDuration"]}
+          />
         )}
         {enabledFields.includes("restDuration") && (
-          <TimeInput label="Rest Duration" name="restDuration" />
+          <TimeInput
+            label="Rest Duration"
+            name="restDuration"
+            defaultValue={defaultValues["restDuration"]}
+          />
         )}
         {enabledFields.includes("rounds") && (
           <PositiveIntegerInput required={true} label="Rounds" name="rounds" />
