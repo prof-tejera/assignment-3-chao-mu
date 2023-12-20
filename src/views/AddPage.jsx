@@ -1,6 +1,3 @@
-// react-router-dom
-import { useNavigate } from "react-router-dom";
-
 // Ours - Components
 import AddTimerForm from "@/components/workout/AddTimerForm";
 
