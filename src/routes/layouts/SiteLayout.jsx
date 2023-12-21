@@ -10,7 +10,10 @@ const SiteLayout = () => {
         <nav className={styles.navigation}>
           <ul>
             <li>
-              <Link to="/">Workout</Link>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/workout">Workout</Link>
             </li>
             <li>
               <Link to="/add">Add Timer</Link>
@@ -21,7 +24,7 @@ const SiteLayout = () => {
           </ul>
         </nav>
       </header>
-      <main className={styles.main}>
+      <main data-testid="main" className={styles.main}>
         <Outlet />
       </main>
     </>

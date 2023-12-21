@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
@@ -14,9 +14,13 @@ const renderRoute = (route) => {
 
 // Smell test the app
 describe("App", () => {
-  test("renders basic routes", () => {
-    const routes = ["/", "/add", "/docs"];
+  for (const route of ["/", "/add", "/docs", "/workout"]) {
+    test(`renders ${route}`, async () => {
+      renderRoute(route);
 
-    routes.forEach((route) => renderRoute(route));
-  });
+      await waitFor(() => {
+        screen.getByTestId("main");
+      });
+    });
+  }
 });
