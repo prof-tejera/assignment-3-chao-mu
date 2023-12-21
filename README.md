@@ -52,7 +52,7 @@ We will be grading based on the features listed above and overall code quality
 
 ### Deployment Instructions (GH actions)
 
-[Deployment instructions](https://github.com/prof-tejera/react-deployment-code#github-actions)
+URL: https://assignment-3-chao-mu.vercel.app/
 
 ## Bonus
 
