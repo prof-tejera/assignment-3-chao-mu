@@ -24,48 +24,52 @@ const WorkoutPlan = ({ plan, selectedTimerId }) => {
 
   return (
     <section className={styles["workout-plan"]}>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Work</th>
-            <th>Rest</th>
-            <th>Rounds</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className={styles["table"]}>
+        <div className={styles["thead"]}>
+          <div>Type</div>
+          <div>Work</div>
+          <div>Rest</div>
+          <div>Rounds</div>
+        </div>
+        <div className={styles["tbody"]}>
           {plan.length === 0 && (
-            <tr>
-              <td className={styles["no-timers"]} colSpan={5}>
-                No timers added yet
-              </td>
-            </tr>
+            <div className={styles["no-timers"]}>No timers added yet</div>
           )}
           {plan.map((options) => (
-            <tr key={options.id} data-active={options.id === selectedTimerId}>
-              <td>{options.type}</td>
-              <td>
-                <TimeDisplay timeMs={options.workDuration} />
-              </td>
-              <td>
-                {options.restDuration > 0 && (
-                  <TimeDisplay timeMs={options.restDuration} />
-                )}
-              </td>
-              <td>
-                {hasTimerFeature(options.type, "rounds") && options.rounds}
-              </td>
-              <td className={styles.actions}>
+            <div
+              className={styles["row"]}
+              key={options.id}
+              data-active={options.id === selectedTimerId}
+            >
+              <div className={styles["timer-fields"]}>
+                <div>{options.type}</div>
+                <div>
+                  <TimeDisplay timeMs={options.workDuration} />
+                </div>
+                <div>
+                  {options.restDuration > 0 && (
+                    <TimeDisplay timeMs={options.restDuration} />
+                  )}
+                </div>
+                <div>
+                  {hasTimerFeature(options.type, "rounds") && options.rounds}
+                </div>
+              </div>
+              {options.description && (
+                <div className={styles["description"]}>
+                  {options.description}
+                </div>
+              )}
+              <div className={styles.actions}>
                 <DeleteTimerButton id={options.id} />
                 <Button onClick={() => navigate("/edit/" + options.id)}>
                   Edit
                 </Button>
-              </td>
-            </tr>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </section>
   );
 };
