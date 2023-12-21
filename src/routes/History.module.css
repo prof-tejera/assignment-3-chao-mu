@@ -1,4 +1,26 @@
+.history h1 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.history h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxl);
+}
+
 .history {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  align-self: center;
+  max-width: 900px;
+  width: 100%;
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 3px solid var(--clr-primary-500);
 }
