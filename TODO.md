@@ -6,7 +6,8 @@ feat: save sessions in local storage
 
 (after Workout History)
 
-feat: add sessionId to workout, add, and edit links
+feat: add sessionId to all links
+feat: overwrite sessionId if in param
 
 ## Workout history
 
