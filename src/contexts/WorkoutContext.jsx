@@ -1,11 +1,12 @@
 // React
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 // Ours - Reducer
 import { workoutReducer } from "@/reducers/workoutReducer";
 
 // Ours - Hooks
 import useSessionReducer from "@/hooks/useSessionReducer";
+import useWorkoutHistory from "@/hooks/useWorkoutHistory";
 
 // Ours - Types
 import { createWorkout } from "@/types/workout";
@@ -42,6 +43,12 @@ export const WorkoutProvider = ({ children }) => {
     reducer: workoutReducer,
     initialState: createWorkout(),
   });
+
+  const updateHistory = useWorkoutHistory();
+
+  useEffect(() => {
+    updateHistory(workout);
+  }, [workout, updateHistory]);
 
   return (
     <WorkoutContext.Provider value={workout}>

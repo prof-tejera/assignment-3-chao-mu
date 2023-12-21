@@ -3,7 +3,7 @@ import { useReducer, useEffect, useCallback } from "react";
 
 // Ours - Hooks
 import useStorage from "@/hooks/useStorage";
-import { getOrCreateSessionId } from "@/utils/sessions";
+import { getOrCreateSessionId } from "@/utils/storage";
 
 /**
  * Custom hook that combines `useReducer` with local storage to persist in a simulated session,

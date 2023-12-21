@@ -8,7 +8,7 @@ import {
   getOrCreateSessionId,
   clearSessionId,
   sessionIdSessionStorageKey,
-} from "./sessions";
+} from "./storage";
 
 const createMockStorageKey = ({
   sessionId = "abc123",
@@ -18,7 +18,7 @@ const createMockStorageKey = ({
   subkey,
 });
 
-describe("sessions", () => {
+describe("storage", () => {
   beforeEach(() => {
     sessionStorage.clear();
   });

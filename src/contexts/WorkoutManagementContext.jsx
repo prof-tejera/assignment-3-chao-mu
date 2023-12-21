@@ -46,7 +46,7 @@ export const WorkoutManagementProvider = ({ children }) => {
 
   const workoutDispatch = useWorkoutDispatchContext();
   const workout = useWorkoutContext();
-  const { completed } = workout;
+  const { completed, completedAt } = workout;
 
   const currentTimerOptions = Workout.getCurrentTimer(workout);
   const currentTimerId = currentTimerOptions?.id;

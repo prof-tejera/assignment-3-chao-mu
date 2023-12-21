@@ -12,6 +12,22 @@ export const sessionIdSessionStorageKey = "sessionId";
 const sessionIdField = "session";
 const subkeyField = "subkey";
 const fieldSep = "::";
+// Increment v to ignore old keys.
+const storageKeyPrefix = "STORAGE_KEY-v4";
+
+export const getAllStorageKeys = () => {
+  const keys = Object.keys(localStorage)
+    .filter((key) => key.startsWith(storageKeyPrefix + fieldSep))
+    .map((key) => deserializeStorageKey(key));
+
+  return keys;
+};
+
+export const storeValue = (storageKey, value) =>
+  localStorage.setItem(serializeStorageKey(storageKey), JSON.stringify(value));
+
+export const getStoredValue = (storageKey) =>
+  JSON.parse(localStorage.getItem(serializeStorageKey(storageKey)));
 
 const createSessionId = () => uuidv4();
 
@@ -42,7 +58,7 @@ export const clearSessionId = () => {
  * @returns {string}
  */
 export const serializeStorageKey = ({ sessionId, subkey }) => {
-  return [sessionIdField, sessionId, subkeyField, subkey]
+  return [storageKeyPrefix, sessionIdField, sessionId, subkeyField, subkey]
     .map((el) => String(el))
     .join(fieldSep);
 };
@@ -52,14 +68,21 @@ export const serializeStorageKey = ({ sessionId, subkey }) => {
  * @returns {StorageKey}
  */
 export const deserializeStorageKey = (storageKey) => {
-  const [parsedSessionIdField, sessionId, parsedSubkeyField, subkey] =
-    storageKey.split(fieldSep);
+  const [
+    parsedStorageKeyPrefix,
+    parsedSessionIdField,
+    sessionId,
+    parsedSubkeyField,
+    subkey,
+  ] = storageKey.split(fieldSep);
 
   if (
     parsedSessionIdField !== sessionIdField ||
     parsedSubkeyField !== subkeyField
   ) {
-    throw new Error(`Invalid storage key: ${storageKey}`);
+    throw new Error(
+      `Invalid storage key: ${storageKey}. Parsed: sessionIdFieldName=${parsedSessionIdField}, sessionId=${sessionId}, subkeyFieldName=${parsedSubkeyField}  subkey={subkey}`,
+    );
   }
 
   return { sessionId, subkey };

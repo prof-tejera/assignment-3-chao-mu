@@ -1,3 +1,6 @@
+// uuid
+import { v4 as uuidv4 } from "uuid";
+
 // Ours - Types
 import { getElapsed } from "./clock";
 import { getTotalDuration } from "./timer";
@@ -10,6 +13,8 @@ import { sum } from "@/utils/math";
  * @property {Array<import("./timer").TimerOptions>} plan
  * @property {number} cursor
  * @property {boolean} completed
+ * @property {number} [completedAt]
+ * @property {string} id
  */
 
 /**
@@ -19,6 +24,7 @@ export const createWorkout = () => ({
   plan: [],
   cursor: 0,
   completed: false,
+  id: uuidv4(),
 });
 
 /**
@@ -128,9 +134,9 @@ export const signalTimerCompleted = (workout, { id }) => {
     return workout;
   }
 
-  // Was it the last timer?
-  if (cursor === plan.length - 1) {
-    return { ...workout, completed: true };
+  // Was it the last timer? Are we not already completed?
+  if (cursor === plan.length - 1 && !workout.completed) {
+    return { ...workout, completed: true, completedAt: Date.now() };
   }
 
   return nextTimer(workout);
