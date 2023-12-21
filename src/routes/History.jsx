@@ -15,6 +15,11 @@ const History = () => {
   return (
     <section className={styles["history"]}>
       <h1>History</h1>
+      <p>
+        Completed workouts accross all sessions. One session per tab or window.
+        Each session has its own workout plan.
+      </p>
+      <div className={styles["spacer"]} />
       <div className={styles["history-list"]}>
         {workoutHistory.map((workout) => (
           <section key={workout.id} className={styles["workout"]}>
