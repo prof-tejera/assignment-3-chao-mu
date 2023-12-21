@@ -12,10 +12,10 @@ const AddTimerForm = () => {
 
   const { addTimer } = useWorkoutManagementContext();
 
-  // Add the timer and redirect to home
+  // Add the timer and redirect to workout
   const handleSubmit = (options) => {
     addTimer(options);
-    navigate("/");
+    navigate("/workout");
   };
 
   return <TimerForm onSubmit={handleSubmit} />;

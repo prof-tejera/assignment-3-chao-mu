@@ -10,7 +10,7 @@ const SiteLayout = () => {
         <nav className={styles.navigation}>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">History</Link>
             </li>
             <li>
               <Link to="/workout">Workout</Link>

@@ -13,9 +13,9 @@ import { useWorkoutContext } from "@/contexts/WorkoutContext";
 import { useWorkoutManagementContext } from "@/contexts/WorkoutManagementContext";
 
 // Ours - Style
-import styles from "./Home.module.css";
+import styles from "./Workout.module.css";
 
-const Home = () => {
+const Workout = () => {
   const workout = useWorkoutContext();
   const { plan } = workout;
 
@@ -26,7 +26,7 @@ const Home = () => {
   const notReady = plan.length === 0;
 
   return (
-    <div className={styles["home-page"]}>
+    <div className={styles["workout-page"]}>
       {notReady ? (
         <TimerDisplayPlaceholder />
       ) : (
@@ -45,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Workout;

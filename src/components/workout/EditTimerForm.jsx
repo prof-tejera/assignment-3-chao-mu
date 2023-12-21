@@ -22,10 +22,9 @@ const EditPage = ({ timerId }) => {
     throwNotFound(`Timer with id ${timerId} not found`);
   }
 
-  // Update the timer and redirect to home
   const handleSubmit = (options) => {
     updateTimer(options);
-    navigate("/");
+    navigate("/workout");
   };
 
   return <TimerForm values={timerOptions} onSubmit={handleSubmit} />;

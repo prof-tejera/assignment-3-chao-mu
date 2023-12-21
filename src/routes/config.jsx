@@ -1,7 +1,8 @@
 // Ours - Routes - Pages
-import Home from "./Home";
+import History from "./History";
 import Add from "./Add";
 import Edit from "./Edit";
+import Workout from "./Workout";
 import Documentation from "./Documentation";
 
 // Ours - Routes - Layouts
@@ -18,10 +19,15 @@ export default [
     path: "/",
     element: <Root />,
     errorElement: <FallbackForRouter />,
+    id: "root",
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <History />,
+      },
+      {
+        path: "workout",
+        element: <Workout />,
       },
       {
         element: <FormPageLayout />,
