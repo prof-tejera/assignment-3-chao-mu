@@ -1,6 +1,3 @@
-// React
-import { useReducer } from "react";
-
 // Ours - Types
 import {
   removeTimer,
