@@ -1,30 +1,37 @@
 // React
 import { useReducer, useEffect, useCallback } from "react";
 
-// usehooks
-import { useSessionStorage } from "@uidotdev/usehooks";
+// Ours - Hooks
+import useStorage from "@/hooks/useStorage";
+import { getOrCreateSessionId } from "@/utils/sessions";
 
 /**
- * Custom hook that combines `useReducer` with session storage to persist state.
+ * Custom hook that combines `useReducer` with local storage to persist in a simulated session,
+ * the way session storage works, except it will persist across tabs and windows if needed.
  *
  * @template T - Type of the reducer's state.
  *
  * @param {object} params - Parameters for the hook.
- * @param {string} params.key - Key to identify the session storage entry.
+ * @param {string} params.subkey - Key to identify which storage entry within our session
  * @param {(state: T, action: any) => T} params.reducer - Reducer function for state updates.
  * @param {(state: T) => T} [params.transform]  Function to transform state.
  * @param {T} params.initialState - initial state if not found in session storage
  *
  * @returns {[T, Function, () => void]} - Returns the current state and dispatch function.
  */
-const useSessionStorageReducer = ({
-  key,
+const useSessionReducer = ({
+  subkey,
   reducer,
   initialState,
   transform = (s) => s,
 }) => {
-  const [storedState, setStoredState] = useSessionStorage(
-    key,
+  const storageKey = {
+    sessionId: getOrCreateSessionId(),
+    subkey,
+  };
+
+  const [storedState, setStoredState] = useStorage(
+    storageKey,
     transform(initialState),
   );
   const [state, dispatch] = useReducer(reducer, storedState);
@@ -42,4 +49,4 @@ const useSessionStorageReducer = ({
   return [state, dispatch, save];
 };
 
-export default useSessionStorageReducer;
+export default useSessionReducer;
