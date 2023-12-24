@@ -1,0 +1,4 @@
+.time-input {
+  display: flex;
+  gap: var(--spacing-xxs);
+}

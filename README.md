@@ -1,8 +1,8 @@
 # Assignment 3 (A3)
 
-Now that we have our basic workout app working (A2) we are going to build out more features. Our starting point is your A2 code, so copy it into this repo (not the `.github` folder). ***The goal is to have a production ready workout app by the end of A3.*** Some of the features below are harder to implement than others. I recommend staring with the "Persisting state" and then doing the rest in any order.
+Now that we have our basic workout app working (A2) we are going to build out more features. Our starting point is your A2 code, so copy it into this repo (not the `.github` folder). **_The goal is to have a production ready workout app by the end of A3._** Some of the features below are harder to implement than others. I recommend staring with the "Persisting state" and then doing the rest in any order.
 
-## List of new features 
+## List of new features
 
 ### Persisting state (Only Graduate)
 
@@ -16,7 +16,7 @@ After the workout has been configured and the user is on the main run workout sc
 
 After the workout has been configured and the user is on the main run workout screen, the user can move any timer to a different position in the queue. This can be done a couple of ways. You are welcome to use a drag and drop third party package or come up with something on your own (remember to update URL). The user should also be able to remove a timer from the queue.
 
-### Display total time 
+### Display total time
 
 After the workout has been configured and the user is on the main run workout screen, display the total workout time and count down from total time to zero (when workout is complete) once the workout has been started.
 
@@ -28,16 +28,19 @@ Add a description field to each time that the user can add when creating the tim
 
 If for any reason your workout app errors out, then you should handle this and present the user with an error message. `react-error-boundary` package has a nice implementation of react "error boundaries" that you can use to handle this scenario.
 
-### BONUS: Workout history 
+### BONUS: Workout history
 
-We want to create a new screen that displays a list of previous workouts (create a new route and link to the history page in the navbar). ***Once a workout has been completed, add this workout to the history and save it to local storage***. On the new history screen display all workouts completed and for each workout you should display some summary of all timers run and what the durations/rounds for each timer was.
-
+We want to create a new screen that displays a list of previous workouts (create a new route and link to the history page in the navbar). **_Once a workout has been completed, add this workout to the history and save it to local storage_**. On the new history screen display all workouts completed and for each workout you should display some summary of all timers run and what the durations/rounds for each timer was.
 
 ## Deliverables
+
 - Complete all features listed above
-- As always deploy your app 
+- As always deploy your app
+
 ## Grading Rubric
+
 We will be grading based on the features listed above and overall code quality
+
 - Persisting state (20pt)
 - Workout history (20pt)
 - Edit a timer (10pt)
@@ -49,7 +52,7 @@ We will be grading based on the features listed above and overall code quality
 
 ### Deployment Instructions (GH actions)
 
-[Deployment instructions](https://github.com/prof-tejera/react-deployment-code#github-actions)
+URL: https://assignment-3-chao-mu.vercel.app/
 
 ## Bonus
 

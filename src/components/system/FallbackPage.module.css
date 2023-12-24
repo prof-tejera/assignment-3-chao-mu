@@ -1,0 +1,41 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--spacing-xxl);
+  flex-grow: 1;
+  background-color: #002366;
+  color: #ffffff;
+  padding: 0 var(--spacing-xl);
+}
+
+.hgroup {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--spacing-md);
+}
+.hgroup h1 {
+  font-size: var(--font-size-xxl);
+}
+
+.hgroup p {
+  font-size: var(--font-size-xl);
+}
+
+.error {
+  font-size: var(--font-size-xxl);
+  color: var(--color-error);
+  font-style: italic;
+  text-align: center;
+}
+
+.reset {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: inherit;
+  font-size: var(--font-size-xl);
+}

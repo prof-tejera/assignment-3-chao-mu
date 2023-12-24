@@ -1,0 +1,10 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form [type="submit"] {
+  margin-top: var(--spacing-xl);
+  align-self: start;
+  margin-left: 0.25rem;
+}
